@@ -1,0 +1,35 @@
+; the next section is mandatory
+[general]
+name=HelloWorld
+qgisMinimumVersion=1.8
+description=This is a plugin for greeting the
+    (going multiline) world
+category=Raster
+version=version 1.2
+; end of mandatory metadata
+
+; start of optional metadata
+changelog=this is a very
+    very
+    very
+    very
+    very
+    very long multiline changelog
+
+; tags are in comma separated value format, spaces are allowed
+tags=wkt,raster,hello world
+
+; these metadata can be empty
+; in a future version of the web application it will
+; be probably possible to create a project on redmine
+; if they are not filled
+homepage=http://www.itopen.it
+tracker=http://bugs.itopen.it
+repository=http://www.itopen.it/repo
+icon=icon.png
+
+; experimental flag
+experimental=True
+
+; deprecated flag (applies to the whole plugin and not only to the uploaded version)
+deprecated=False
