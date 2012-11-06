@@ -1,9 +1,9 @@
 ; the next section is mandatory
 [general]
-name=HelloWorld
+name=lisa4qgis
 qgisMinimumVersion=1.8
-description=This is a plugin for greeting the
-    (going multiline) world
+description=This is a plugin for performing a LISA analisys using
+    (going multiline) pysal
 category=Raster
 version=version 1.2
 ; end of mandatory metadata
