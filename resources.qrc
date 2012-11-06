@@ -1,5 +1,0 @@
-<RCC> 
-  <qresource prefix="/plugins/lisa4qgis" > 
-    <file>icon.png</file> 
-  </qresource> 
-</RCC> 
