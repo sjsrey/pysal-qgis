@@ -1,6 +1,6 @@
 ; the next section is mandatory
 [general]
-name=lisa4qgis
+name=Pysal
 qgisMinimumVersion=1.8
 description=This is a plugin for performing a LISA analisys using
     (going multiline) pysal
