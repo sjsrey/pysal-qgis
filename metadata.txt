@@ -4,7 +4,7 @@ name=lisa4qgis
 qgisMinimumVersion=1.8
 description=This is a plugin for performing a LISA analisys using
     (going multiline) pysal
-category=Raster
+category=Vector
 version=version 1.2
 ; end of mandatory metadata
 
