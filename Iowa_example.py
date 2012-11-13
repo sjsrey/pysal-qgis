@@ -1,34 +1,23 @@
-NEEDS for LISA Plugin:
+import numpy as np
+import pysal
 
-1.) User selects a shapefile
-2.) User selects a variable/attribute of interest
-3.) User selects or creates a weights matrix
-4.) User selects (or is told) a significance value
-5.) autocorrelation output is appended to the QGIS attribute table
+# Open the dbf associated with your shapefile
+db = pysal.open('Iowa.dbf')
 
+# Select the attribute you want to observe
+y = np.array(db.by_col['GOVTPAYPER'])
 
-WANTS/details:
+# Create a weights matrix for this session (or, open existing one)
+w = pysal.queen_from_shapefile('Iowa.shp',idVariable='POLY_ID')
 
-1.) Select shapefile
+# Command for Moran's Local
+np.random.seed(12345)
+lm = pysal.Moran_Local(y,w)
 
-2.) Variable/attribute selection
-	Read attributes (db.header in pysal) 
+# Identify the significant clusters at p=0.05
+sig = lm.p_sim<0.05
+print lm.p_sim[sig]
 
-3.) Weights matrix
-	Definitely should have:	
-		knn - can probably use centroid dist. in pysal
-		queen/rook contiguity - use pysal or figure out how to do in qgis?
-		threshold distance - can probably use centroid dist. in pysal
+# Identify which quadrant each of these values is in
+print lm.q[sig]
 
-4.) Significance Value
-	Each p-value would be its own new attribute column
-
-5.) Append to attribute table
-	write to DBF?
-	Numpy array is [1,2,3,4].  Should we change to [HH,HL,LL,LH] ?
-	Output preview?  Useful to avoid "junk output" gets appended to dbf
-	Append name of weights matrix/sig level to new attribute!!
-		i.e, 	(LISA_) + (nn4_) + (05)
-			(LISA_) + (Queen1_) + (01)
-			(LISA_) + (thresh200_) + (10)
-	Automatic display/color scheme possible in QGIS?
