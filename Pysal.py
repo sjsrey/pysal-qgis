@@ -100,3 +100,4 @@ class Pysal:
       # substitute with your code
       pass
 
+# testing Venu's error message  
