@@ -59,12 +59,12 @@ class Pysal:
     self.menu.addMenu(clustering_menu)
     self.menu.setTitle( QCoreApplication.translate( "Pysal","&Pysal" ) )
     lisa = QAction( QCoreApplication.translate("ESDA", "LISA" ), self.iface.mainWindow() )
-    morans = QAction( QCoreApplication.translate("Weights","Moran's I" ), self.iface.mainWindow() )
+    mat = QAction( QCoreApplication.translate("Weights","MAT" ), self.iface.mainWindow() )
     veroni = QAction( QCoreApplication.translate("Clustering","Veroni" ), self.iface.mainWindow() )
     
     #add actions to submenus, other actions will be added to the list here
     esda_menu.addActions( [lisa] )
-    weights_menu.addActions( [morans] )
+    weights_menu.addActions( [mat] )
     clustering_menu.addActions( [veroni] )
 
     menu_bar = self.iface.mainWindow().menuBar()
@@ -74,7 +74,7 @@ class Pysal:
 
     #assign methods to actions
     QObject.connect( lisa, SIGNAL("triggered()"), self.run )   
-    QObject.connect( morans, SIGNAL("triggered()"), self.run )    
+    QObject.connect( mat, SIGNAL("triggered()"), self.run )    
     QObject.connect( veroni, SIGNAL("triggered()"), self.run )  
 
   def unload(self):
