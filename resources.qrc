@@ -1,5 +1,5 @@
 <RCC> 
   <qresource prefix="/plugins/Pysal" > 
-    <file>icon.png</file> 
+    <file>pysal.png</file> 
   </qresource> 
 </RCC> 
