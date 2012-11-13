@@ -22,10 +22,10 @@ tags=wkt,raster,hello world
 ; in a future version of the web application it will
 ; be probably possible to create a project on redmine
 ; if they are not filled
-homepage=http://www.itopen.it
-tracker=http://bugs.itopen.it
-repository=http://www.itopen.it/repo
-icon=icon.png
+homepage=http://code.google.com/p/pysal/
+tracker=http://code.google.com/p/pysal/
+repository=https://github.com/sjsrey/pysal-qgis=
+icon=pysal.png
 
 ; experimental flag
 experimental=True
