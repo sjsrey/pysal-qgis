@@ -83,8 +83,7 @@ class Pysal:
     # Remove the plugin menu item and icon
     self.iface.removePluginMenu("&Pysal",self.action)
     self.iface.removeToolBarIcon(self.action)
-    # no self.toolbar in this version
-    # del self.toolbar
+    del self.toolBar
     del self.menu
 
   # run method that performs all the real work
