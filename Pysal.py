@@ -33,18 +33,18 @@ class Pysal:
 
   def initGui(self):  
     # Create action that will start plugin configuration
-    self.action = QAction(QIcon(":/plugins/Pysal/icon.png"), \
-        "Pysal", self.iface.mainWindow())
+    self.action = QAction(QIcon("home/everett/.qgis/python/plugins/Pysal/pysal.png"), \
+        "PySAL", self.iface.mainWindow())
     # connect the action to the run method
     QObject.connect(self.action, SIGNAL("activated()"), self.run) 
 
     # Add toolbar button and menu item
     self.iface.addToolBarIcon(self.action)
-    self.iface.addPluginToMenu("&Pysal", self.action)
+    self.iface.addPluginToMenu("&PySAL", self.action)
 
     #Create new toolbar
-    self.toolBar = self.iface.addToolBar("Pysal")
-    self.toolBar.setObjectName("Pysal")
+    self.toolBar = self.iface.addToolBar("PySAL")
+    self.toolBar.setObjectName("PySAL")
     
     # Create main Pysal menu and main Pysal subgroups, there is probably a more efficient way to do this
     self.menu = QMenu()
@@ -52,22 +52,27 @@ class Pysal:
     esdaMenu.setTitle("ESDA")
     weightsMenu = QMenu(self.menu)
     weightsMenu.setTitle("Weights")
-    clusteringMenu = QMenu(self.menu)
-    clusteringMenu.setTitle("Clustering")
+    localAutoMenu = QMenu(esdaMenu)
+    localAutoMenu.setTitle("Local Autocorrelation")
+    globalAutoMenu = QMenu(esdaMenu)
+    globalAutoMenu.setTitle("Global Autocorrelation")
 
     # add submenus under main Pysal menu
     self.menu.addMenu(esdaMenu)
     self.menu.addMenu(weightsMenu)
-    self.menu.addMenu(clusteringMenu)
-    self.menu.setTitle( QCoreApplication.translate( "Pysal","&Pysal" ) )
-    lisa = QAction( QCoreApplication.translate("ESDA", "LISA" ), self.iface.mainWindow() )
+    esdaMenu.addMenu(globalAutoMenu)
+    esdaMenu.addMenu(localAutoMenu)
+    self.menu.setTitle( QCoreApplication.translate( "PySAL","&PySAL" ) )
+    moransGlobal = QAction(QIcon("home/everett/.qgis/python/plugins/Pysal/pysal.png"), QCoreApplication.translate("Global Autocorrelation", "Moran's I" ), self.iface.mainWindow() )
+    moransLocal = QAction(QIcon("~/.qgis/python/plugins/Pysal/pysal.png"), QCoreApplication.translate("Local Autocorrelation", "Moran's I" ), self.iface.mainWindow() )
+    gearys = QAction( QCoreApplication.translate("Global Autocorrelation","Geary's C"),self.iface.mainWindow() )
+    getis = QAction( QCoreApplication.translate("Global Autocorrelation","Getis and Ord's G"),self.iface.mainWindow() )
     mat = QAction( QCoreApplication.translate("Weights","MAT" ), self.iface.mainWindow() )
-    veroni = QAction( QCoreApplication.translate("Clustering","Veroni" ), self.iface.mainWindow() )
-    
+        
     # add actions to submenus, other actions will be added to the list here
-    esdaMenu.addActions( [lisa] )
+    localAutoMenu.addActions( [moransLocal] )
+    globalAutoMenu.addActions( [moransGlobal,gearys,getis] )
     weightsMenu.addActions( [mat] )
-    clusteringMenu.addActions( [veroni] )
 
     menu_bar = self.iface.mainWindow().menuBar()
     actions = menu_bar.actions()
@@ -75,9 +80,11 @@ class Pysal:
     menu_bar.insertMenu( lastAction, self.menu )
 
     # assign methods to actions
-    QObject.connect( lisa, SIGNAL("triggered()"), self.run )   
+    QObject.connect( moransLocal, SIGNAL("triggered()"), self.run )   
+    QObject.connect( moransGlobal, SIGNAL("triggered()"), self.run )
     QObject.connect( mat, SIGNAL("triggered()"), self.run )    
-    QObject.connect( veroni, SIGNAL("triggered()"), self.run )  
+    QObject.connect( gearys, SIGNAL("triggered()"), self.run )  
+    QObject.connect( getis, SIGNAL("triggered()"), self.run)
 
   def unload(self):
     # Remove the plugin menu item and icon
