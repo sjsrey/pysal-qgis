@@ -46,33 +46,35 @@ class Pysal:
     self.toolBar = self.iface.addToolBar("Pysal")
     self.toolBar.setObjectName("Pysal")
     
-    #Create main Pysal menu and main Pysal subgroups, there is probably a more efficient way to do this
+    # Create main Pysal menu and main Pysal subgroups, there is probably a more efficient way to do this
     self.menu = QMenu()
-    esda_menu = QMenu(self.menu)
-    esda_menu.setTitle("ESDA")
-    weights_menu = QMenu(self.menu)
-    weights_menu.setTitle("Weights")
-    clustering_menu = QMenu(self.menu)
-    clustering_menu.setTitle("Clustering")
-    self.menu.addMenu(esda_menu)
-    self.menu.addMenu(weights_menu)
-    self.menu.addMenu(clustering_menu)
+    esdaMenu = QMenu(self.menu)
+    esdaMenu.setTitle("ESDA")
+    weightsMenu = QMenu(self.menu)
+    weightsMenu.setTitle("Weights")
+    clusteringMenu = QMenu(self.menu)
+    clusteringMenu.setTitle("Clustering")
+
+    # add submenus under main Pysal menu
+    self.menu.addMenu(esdaMenu)
+    self.menu.addMenu(weightsMenu)
+    self.menu.addMenu(clusteringMenu)
     self.menu.setTitle( QCoreApplication.translate( "Pysal","&Pysal" ) )
     lisa = QAction( QCoreApplication.translate("ESDA", "LISA" ), self.iface.mainWindow() )
     mat = QAction( QCoreApplication.translate("Weights","MAT" ), self.iface.mainWindow() )
     veroni = QAction( QCoreApplication.translate("Clustering","Veroni" ), self.iface.mainWindow() )
     
-    #add actions to submenus, other actions will be added to the list here
-    esda_menu.addActions( [lisa] )
-    weights_menu.addActions( [mat] )
-    clustering_menu.addActions( [veroni] )
+    # add actions to submenus, other actions will be added to the list here
+    esdaMenu.addActions( [lisa] )
+    weightsMenu.addActions( [mat] )
+    clusteringMenu.addActions( [veroni] )
 
     menu_bar = self.iface.mainWindow().menuBar()
     actions = menu_bar.actions()
     lastAction = actions[ len( actions ) - 1 ]
     menu_bar.insertMenu( lastAction, self.menu )
 
-    #assign methods to actions
+    # assign methods to actions
     QObject.connect( lisa, SIGNAL("triggered()"), self.run )   
     QObject.connect( mat, SIGNAL("triggered()"), self.run )    
     QObject.connect( veroni, SIGNAL("triggered()"), self.run )  
@@ -97,3 +99,4 @@ class Pysal:
       # do something useful (delete the line containing pass and
       # substitute with your code
       pass
+
