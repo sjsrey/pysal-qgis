@@ -24,7 +24,7 @@ def description():
 def version(): 
   return "Version 1.0" 
 def qgisMinimumVersion():
-  return "1.8"
+  return "1.0"
 def classFactory(iface): 
   # load Pysal class from file Pysal
   from Pysal import Pysal 
