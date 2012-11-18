@@ -6,6 +6,7 @@
 #      by: PyQt4 UI code generator 4.9.5
 #
 # WARNING! All changes made in this file will be lost!
+# First shot at gui to match Kevin's mock up
 
 from PyQt4 import QtCore, QtGui
 
