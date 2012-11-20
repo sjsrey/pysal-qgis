@@ -88,7 +88,7 @@ class Pysal:
 
   def unload(self):
     # Remove the plugin menu item and icon
-    self.iface.removePluginMenu("&Pysal",self.action)
+    self.iface.removePluginMenu("&PySAL",self.action)
     self.iface.removeToolBarIcon(self.action)
     del self.toolBar
     del self.menu
