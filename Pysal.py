@@ -24,6 +24,14 @@ from qgis.core import *
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
+
+import sys, os
+
+currentPath = os.path.dirname( __file__ )
+sys.path.append(os.path.abspath(os.path.dirname(__file__)+'/ga'))
+
+from ga.ga import Ga
+
 from PysalDialog import PysalDialog
 from gaDialog import gaDialog
 class Pysal: 
@@ -82,10 +90,14 @@ class Pysal:
 
     # assign methods to actions
     QObject.connect( moransLocal, SIGNAL("triggered()"), self.run )   
+<<<<<<< HEAD
     QObject.connect( moransGlobal, SIGNAL("triggered()"), self.globalMoran )
+=======
+    QObject.connect( moransGlobal, SIGNAL("triggered()"), Ga.globalMoran )
+>>>>>>> 4b30f6b2257ee4482a897d87de405d07478bc5ae
     QObject.connect( mat, SIGNAL("triggered()"), self.run )    
-    QObject.connect( gearys, SIGNAL("triggered()"), self.run )  
-    QObject.connect( getis, SIGNAL("triggered()"), self.run)
+    QObject.connect( gearys, SIGNAL("triggered()"), Ga.globalGeary )  
+    QObject.connect( getis, SIGNAL("triggered()"), Ga.globalGetis )
 
   def unload(self):
     # Remove the plugin menu item and icon
