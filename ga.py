@@ -17,13 +17,13 @@ email                : x
  ***************************************************************************/
 """
 # Import the PyQt and QGIS libraries
-# from PyQt4.QtCore import * 
-# from PyQt4.QtGui import *
-# from qgis.core import *
+from PyQt4.QtCore import * 
+from PyQt4.QtGui import *
+from qgis.core import *
 
 from gaDialog import gaDialog
 
-class Ga: 
+class ga: 
   
   # run method that performs all the real work
   def globalMoran(self): 

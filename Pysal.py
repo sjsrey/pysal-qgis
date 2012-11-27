@@ -1,3 +1,4 @@
+
 """
 /***************************************************************************
 Name			 	 : Pysal Tools
@@ -32,7 +33,7 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)+'/ga'))
 from ga.ga import Ga
 
 from PysalDialog import PysalDialog
-
+from gaDialog import gaDialog
 class Pysal: 
 
   def __init__(self, iface):
@@ -89,14 +90,18 @@ class Pysal:
 
     # assign methods to actions
     QObject.connect( moransLocal, SIGNAL("triggered()"), self.run )   
+<<<<<<< HEAD
+    QObject.connect( moransGlobal, SIGNAL("triggered()"), self.globalMoran )
+=======
     QObject.connect( moransGlobal, SIGNAL("triggered()"), Ga.globalMoran )
+>>>>>>> 4b30f6b2257ee4482a897d87de405d07478bc5ae
     QObject.connect( mat, SIGNAL("triggered()"), self.run )    
     QObject.connect( gearys, SIGNAL("triggered()"), Ga.globalGeary )  
     QObject.connect( getis, SIGNAL("triggered()"), Ga.globalGetis )
 
   def unload(self):
     # Remove the plugin menu item and icon
-    self.iface.removePluginMenu("&PySAL",self.action)
+    self.iface.removePluginMenu("&Pysal",self.action)
     self.iface.removeToolBarIcon(self.action)
     del self.toolBar
     del self.menu
@@ -113,5 +118,32 @@ class Pysal:
       # do something useful (delete the line containing pass and
       # substitute with your code
       pass
+ 
+  # run method that performs all the real work
+  def globalMoran(self): 
+    # create and show the dialog 
+    dlg1 = gaDialog() 
+    # show the dialog
+    dlg1.show()
+    result = dlg1.exec_() 
+    # See if OK was pressed
+  # run method that performs all the real work
+  def globalGeary(self): 
+    # create and show the dialog 
+    dlg1 = gaDialog()
+    # show the dialog
+    dlg1.show()
+    result = dlg1.exec_() 
+    # See if OK was pressed
 
-# testing Venu's error message  
+
+  # run method that performs all the real work
+  def globalGetis(self): 
+    # create and show the dialog 
+    dlg1 = gaDialog() 
+    # show the dialog
+    dlg1.show()
+    result = dlg1.exec_() 
+    # See if OK was pressed
+
+### testing Venu's error message  
