@@ -1,4 +1,3 @@
-
 """
 /***************************************************************************
 Name			 	 : Pysal Tools
@@ -90,14 +89,10 @@ class Pysal:
 
     # assign methods to actions
     QObject.connect( moransLocal, SIGNAL("triggered()"), self.run )   
-<<<<<<< HEAD
     QObject.connect( moransGlobal, SIGNAL("triggered()"), self.globalMoran )
-=======
-    QObject.connect( moransGlobal, SIGNAL("triggered()"), Ga.globalMoran )
->>>>>>> 4b30f6b2257ee4482a897d87de405d07478bc5ae
     QObject.connect( mat, SIGNAL("triggered()"), self.run )    
-    QObject.connect( gearys, SIGNAL("triggered()"), Ga.globalGeary )  
-    QObject.connect( getis, SIGNAL("triggered()"), Ga.globalGetis )
+    QObject.connect( gearys, SIGNAL("triggered()"), self.globalGeary )  
+    QObject.connect( getis, SIGNAL("triggered()"), self.globalGetis )
 
   def unload(self):
     # Remove the plugin menu item and icon
