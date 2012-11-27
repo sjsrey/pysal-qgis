@@ -1,5 +1,0 @@
-<RCC> 
-  <qresource prefix="/plugins/Pysal/ga" > 
-    <file>icon.png</file> 
-  </qresource> 
-</RCC> 
