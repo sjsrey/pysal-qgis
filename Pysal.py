@@ -1,3 +1,4 @@
+
 """
 /***************************************************************************
 Name			 	 : Pysal Tools
@@ -24,7 +25,7 @@ from qgis.core import *
 import resources
 # Import the code for the dialog
 from PysalDialog import PysalDialog
-
+from gaDialog import gaDialog
 class Pysal: 
 
   def __init__(self, iface):
@@ -81,14 +82,14 @@ class Pysal:
 
     # assign methods to actions
     QObject.connect( moransLocal, SIGNAL("triggered()"), self.run )   
-    QObject.connect( moransGlobal, SIGNAL("triggered()"), self.run )
+    QObject.connect( moransGlobal, SIGNAL("triggered()"), self.globalMoran )
     QObject.connect( mat, SIGNAL("triggered()"), self.run )    
     QObject.connect( gearys, SIGNAL("triggered()"), self.run )  
     QObject.connect( getis, SIGNAL("triggered()"), self.run)
 
   def unload(self):
     # Remove the plugin menu item and icon
-    self.iface.removePluginMenu("&PySAL",self.action)
+    self.iface.removePluginMenu("&Pysal",self.action)
     self.iface.removeToolBarIcon(self.action)
     del self.toolBar
     del self.menu
@@ -105,5 +106,32 @@ class Pysal:
       # do something useful (delete the line containing pass and
       # substitute with your code
       pass
+ 
+  # run method that performs all the real work
+  def globalMoran(self): 
+    # create and show the dialog 
+    dlg1 = gaDialog() 
+    # show the dialog
+    dlg1.show()
+    result = dlg1.exec_() 
+    # See if OK was pressed
+  # run method that performs all the real work
+  def globalGeary(self): 
+    # create and show the dialog 
+    dlg1 = gaDialog()
+    # show the dialog
+    dlg1.show()
+    result = dlg1.exec_() 
+    # See if OK was pressed
 
-# testing Venu's error message  
+
+  # run method that performs all the real work
+  def globalGetis(self): 
+    # create and show the dialog 
+    dlg1 = gaDialog() 
+    # show the dialog
+    dlg1.show()
+    result = dlg1.exec_() 
+    # See if OK was pressed
+
+### testing Venu's error message  
