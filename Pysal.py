@@ -29,7 +29,7 @@ sys.path.append( os.path.abspath( os.path.dirname( __file__) + '/tools') )
 
 # import tools
 # import globalAuto, localAuto, weights
-import globalAuto, doSumLines
+import globalAuto, doSumLines, doAbout
 
 class Pysal: 
 
@@ -60,6 +60,7 @@ class Pysal:
     self.geary.setIcon( QIcon (self.getThemeIcon( "geary.png" ) ) )
     self.getis.setIcon( QIcon (self.getThemeIcon( "getis.png" ) ) )
     self.mat.setIcon( QIcon (self.getThemeIcon( "mat.png" ) ) )
+    self.pysalAbout.setIcon( QIcon (self.getThemeIcon( "about.png" ) ) )
 
 
   def initGui(self):  
@@ -82,11 +83,15 @@ class Pysal:
     self.mat = QAction( QCoreApplication.translate( "PySAL" , "&MAT" ), self.iface.mainWindow() )
     self.weightsMenu.addActions( [self.mat] )
 
+    self.pysalAbout = QAction( QCoreApplication.translate( "PySAL" , "&About PySAL" ), self.iface.mainWindow() )
+
     self.updateThemeIcons("theme")
 
     # add submenus under main Pysal menu
     self.menu.addMenu( self.esdaMenu )
     self.menu.addMenu( self.weightsMenu )
+    self.menu.addSeparator()
+    self.menu.addAction( self.pysalAbout )
         
     # add actions to submenus, other actions will be added to the list here
  
@@ -101,6 +106,7 @@ class Pysal:
     #QObject.connect( mat, SIGNAL("triggered()"), self.mat )    
     #QObject.connect( gearys, SIGNAL("triggered()"), self.globalGeary )  
     #QObject.connect( getis, SIGNAL("triggered()"), self.globalGetis )
+    QObject.connect( self.pysalAbout, SIGNAL("triggered()"), self.about )
 
   def unload(self):
     # Remove the plugin menu item and icon
@@ -132,3 +138,8 @@ class Pysal:
   #def globalgetis( self ):
   #  d = globalAuto.globalAutoDialog( self.iface, 3 )
   #  d.exec_()
+
+  def about( self ):
+    d = doAbout.Dialog (self.iface )
+    d.exec_()
+

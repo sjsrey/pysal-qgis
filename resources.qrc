@@ -10,5 +10,7 @@
         <file>icons/default/geary.png</file>
         <file>icons/default/mat.png</file>
         <file>icons/default/pysal.png</file>
+        <file>icons/default/about.png</file>
+        <file>icons/default/about_logo.png</file>
     </qresource> 
 </RCC> 
