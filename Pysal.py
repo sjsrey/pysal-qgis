@@ -29,7 +29,7 @@ sys.path.append( os.path.abspath( os.path.dirname( __file__) + '/tools') )
 
 # import tools
 # import globalAuto, localAuto, weights
-import globalAuto
+import globalAuto, doSumLines
 
 class Pysal: 
 
@@ -118,7 +118,7 @@ class Pysal:
   #  d.exec_()
 
   def globalmoran( self ):
-    d = globalAuto.gaDialog ( self.iface )
+    d = doSumLines.Dialog ( self.iface )
     d.exec_()
 
   #def matweight( self ):
