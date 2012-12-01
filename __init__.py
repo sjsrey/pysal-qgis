@@ -17,17 +17,21 @@ email                : gel@asu.edu
  ***************************************************************************/
  This script initializes the plugin, making it known to QGIS.
 """
-
-
-
 def name(): 
-  return "Pysal Tools" 
+  return "Pysal Tools"
+
 def description():
-  return "Pysal plugin for QGIS"
+  return "Pysal plugin for QGIS - dev"
+
 def version(): 
-  return "Version 1.0" 
+  return "Version 0.1" 
+
 def qgisMinimumVersion():
   return "1.0"
+
+def icon():
+	return "icons/default/pysal.png"
+
 def classFactory(iface): 
   # load Pysal class from file Pysal
   from Pysal import Pysal 

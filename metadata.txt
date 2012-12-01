@@ -1,22 +1,11 @@
 ; the next section is mandatory
 [general]
-name=Pysal
+name=PySAL
 qgisMinimumVersion=1.0
-description=pysal toolkit for QGIS
+description=PySAL toolkit for QGIS
 category=Vector
-version=version 1.2
+version=version 0.1
 ; end of mandatory metadata
-
-; start of optional metadata
-changelog=this is a very
-    very
-    very
-    very
-    very
-    very long multiline changelog
-
-; tags are in comma separated value format, spaces are allowed
-tags=wkt,raster,hello world
 
 ; these metadata can be empty
 ; in a future version of the web application it will
@@ -25,7 +14,7 @@ tags=wkt,raster,hello world
 homepage=http://code.google.com/p/pysal/
 tracker=http://code.google.com/p/pysal/
 repository=https://github.com/sjsrey/pysal-qgis=
-icon=pysal.png
+icon=:/icons/default/pysal.png
 
 ; experimental flag
 experimental=True

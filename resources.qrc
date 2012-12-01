@@ -1,5 +1,14 @@
-<RCC> 
-  <qresource prefix="/plugins/Pysal" > 
-    <file>pysal.png</file> 
-  </qresource> 
+<RCC>
+    <qresource prefix="/">
+        <file>icons/default/esda.png</file>
+        <file>icons/default/weights.png</file>
+        <file>icons/default/lam.png</file>
+        <file>icons/default/gam.png</file>
+        <file>icons/default/ml.png</file>
+        <file>icons/default/mg.png</file>
+        <file>icons/default/getis.png</file>
+        <file>icons/default/geary.png</file>
+        <file>icons/default/mat.png</file>
+        <file>icons/default/pysal.png</file>
+    </qresource> 
 </RCC> 
