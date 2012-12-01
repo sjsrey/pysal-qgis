@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>748</width>
+    <height>598</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QRadioButton" name="radioButton">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>190</y>
+     <width>111</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Nearest Neighbors</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>390</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Run&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_2">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>220</y>
+     <width>151</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Adjacent Polygons(Queen)</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_3">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>250</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Shared Boundaries(Rook)</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_4">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>280</y>
+     <width>111</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Threshold Distance</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>190</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter Number of Neighbors&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>430</y>
+     <width>641</width>
+     <height>141</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_2">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>220</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter Order&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_3">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>250</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter Order&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_4">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>280</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter Distance&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>350</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Choose Significance Level</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>350</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0.01</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_2">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>350</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0.05</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_3">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>350</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Other1</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_4">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>350</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Other2</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>30</y>
+     <width>121</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Choose Shape file</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_5">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>30</y>
+     <width>251</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Use shapefile that is currently open</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_6">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>60</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Choose a new shapefile</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_5">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>60</y>
+     <width>191</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>190</y>
+     <width>121</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Choose Weights Matrix</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>190</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Enter Number of Neighbors</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>220</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Enter Order</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>250</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Enter Order</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>280</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Enter Distance</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
