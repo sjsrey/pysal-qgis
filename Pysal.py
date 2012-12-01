@@ -72,14 +72,14 @@ class Pysal:
     self.menu.setTitle( QCoreApplication.translate( "PySAL" , "&PySAL" ) )
 
     self.esdaMenu = QMenu( QCoreApplication.translate( "PySAL" , "&ESDA" ), self.iface.mainWindow() )
-    self.moransLocal = QAction( QCoreApplication.translate( "PySAL" , "Local Moran's I" ), self.iface.mainWindow() )
-    self.moransGlobal = QAction( QCoreApplication.translate( "PySAL" , "Global Moran's I" ), self.iface.mainWindow() )
-    self.geary = QAction( QCoreApplication.translate( "PySAL" , "Geary's C" ),self.iface.mainWindow() )
-    self.getis = QAction( QCoreApplication.translate( "PySAL" , "Getis and Ord's G" ),self.iface.mainWindow() )
+    self.moransLocal = QAction( QCoreApplication.translate( "PySAL" , "Local &Moran's I" ), self.iface.mainWindow() )
+    self.moransGlobal = QAction( QCoreApplication.translate( "PySAL" , "Global Moran's &I" ), self.iface.mainWindow() )
+    self.geary = QAction( QCoreApplication.translate( "PySAL" , "Geary's &C" ),self.iface.mainWindow() )
+    self.getis = QAction( QCoreApplication.translate( "PySAL" , "Getis and Ord's &G" ),self.iface.mainWindow() )
     self.esdaMenu.addActions( [self.moransLocal, self.moransGlobal, self.geary, self.getis] )
 
     self.weightsMenu = QMenu( QCoreApplication.translate( "PySAL" , "&Weights" ), self.iface.mainWindow() )
-    self.mat = QAction( QCoreApplication.translate( "PySAL" , "MAT" ), self.iface.mainWindow() )
+    self.mat = QAction( QCoreApplication.translate( "PySAL" , "&MAT" ), self.iface.mainWindow() )
     self.weightsMenu.addActions( [self.mat] )
 
     self.updateThemeIcons("theme")
