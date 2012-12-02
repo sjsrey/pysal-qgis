@@ -16,8 +16,9 @@ class weightsdialog(QDialog, Ui_Weight):
         # Set up the user interface from Designer.
         self.setupUi(self)
         # QObject.connect(self.toolOut, SIGNAL("clicked()"), self.outFile)
-	QObject.connect(self.comboBox, SIGNAL("clicked()"), self.contiguity_from_shapefile(inPoly, criteria == 'rook'))
-        self.setWindowTitle(self.tr("Weights from Shapefile"))
+        QObject.connect(self.comboBox, SIGNAL("clicked()"),
+        self.contiguity_from_shapefile())
+        self.setWindowTitle(self.tr("Weights from Contiguity"))
         self.generateWeights = self.pushButton( QPushButton.Ok )
         # populate layer list
         # self.progressBar.setValue(0)
@@ -38,7 +39,7 @@ class weightsdialog(QDialog, Ui_Weight):
         # elif self.lnField.text() == "":
             # QMessageBox.information(self, self.tr("Sum Line Lengths In Polyons"), self.tr("Please specify output length field"))
         else:
-            inPoly = self.comboBox.currentText()
+            shapefile = self.comboBox.currentText()
             # inLns = self.inPoint.currentText()
             # inField = self.lnField.text()
             # outPath = self.outShape.text()

@@ -59,7 +59,7 @@ class Pysal:
     self.moransLocal.setIcon( QIcon (self.getThemeIcon( "ml.png" ) ) )
     self.geary.setIcon( QIcon (self.getThemeIcon( "geary.png" ) ) )
     self.getis.setIcon( QIcon (self.getThemeIcon( "getis.png" ) ) )
-    self.mat.setIcon( QIcon (self.getThemeIcon( "mat.png" ) ) )
+    self.wfc.setIcon( QIcon (self.getThemeIcon( "mat.png" ) ) )
     self.pysalAbout.setIcon( QIcon (self.getThemeIcon( "about.png" ) ) )
 
 
@@ -80,8 +80,8 @@ class Pysal:
     self.esdaMenu.addActions( [self.moransLocal, self.moransGlobal, self.geary, self.getis] )
 
     self.weightsMenu = QMenu( QCoreApplication.translate( "PySAL" , "&Weights" ), self.iface.mainWindow() )
-    self.mat = QAction( QCoreApplication.translate( "PySAL" , "&MAT" ), self.iface.mainWindow() )
-    self.weightsMenu.addActions( [self.mat] )
+    self.wfc = QAction( QCoreApplication.translate( "PySAL" , "&Weights from Contiguity" ), self.iface.mainWindow() )
+    self.weightsMenu.addActions( [self.wfc] )
 
     self.pysalAbout = QAction( QCoreApplication.translate( "PySAL" , "&About PySAL" ), self.iface.mainWindow() )
 
@@ -103,7 +103,7 @@ class Pysal:
     # assign methods to actions
     #QObject.connect( moransLocal, SIGNAL("triggered()"), self.localMoran )   
     QObject.connect( self.moransGlobal, SIGNAL("triggered()"), self.globalmoran )
-    QObject.connect( self.mat, SIGNAL("triggered()"), self.matweight )    
+    QObject.connect( self.wfc, SIGNAL("triggered()"), self.matweight )    
     QObject.connect( self.geary, SIGNAL("triggered()"), self.globalGeary )  
     #QObject.connect( getis, SIGNAL("triggered()"), self.globalGetis )
     QObject.connect( self.pysalAbout, SIGNAL("triggered()"), self.about )
