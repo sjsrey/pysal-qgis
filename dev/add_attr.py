@@ -17,7 +17,7 @@ for i in cluster:
 
 # This is the part that does all the work
 a = range(layer.featureCount())
-d = dict(zip(a,cluster)
+d = dict(zip(a,cluster))
 allAtt = provider.attributeIndexes()
 n = len(allAtt) - 1
 for i in a:
