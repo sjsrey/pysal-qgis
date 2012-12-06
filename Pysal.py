@@ -29,7 +29,7 @@ sys.path.append( os.path.abspath( os.path.dirname( __file__) + '/tools') )
 
 # import tools
 # import globalAuto, localAuto, weights
-import globalAuto, globalMoran, doAbout, globalgearyDialog
+import globalMoran, doAbout, globalgearyDialog
 import weightsFromShapefile
 
 class Pysal: 
