@@ -3,7 +3,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import ftools_utils
 from qgis.core import *
-from ui_weights import Ui_Weight
+from ui_weights import Ui_Dialog
 
 import pysal as PS
 import numpy as NP
@@ -16,10 +16,11 @@ class weightsdialog(QDialog, Ui_Weight):
         # Set up the user interface from Designer.
         self.setupUi(self)
         # QObject.connect(self.toolOut, SIGNAL("clicked()"), self.outFile)
+        self.buttonOk = self.buttonBox_2.button( QDialogButtonBox.Ok )
         QObject.connect(self.comboBox, SIGNAL("clicked()"),
         self.contiguity_from_shapefile())
-        self.setWindowTitle(self.tr("Weights from Contiguity"))
-        self.generateWeights = self.pushButton( QPushButton.Ok )
+        #self.setWindowTitle(self.tr("Weights from Contiguity"))
+        #self.generateWeights = self.pushButton( QPushButton.Ok )
         # populate layer list
         # self.progressBar.setValue(0)
         mapCanvas = self.iface.mapCanvas()
@@ -29,7 +30,7 @@ class weightsdialog(QDialog, Ui_Weight):
         self.comboBox.addItems(layers)
     
     def accept(self):
-        self.comboBox.setEnabled( False )
+        self.buttonOk.setEnabled( False )
         if self.comboBox.currentText() == "":
             QMessageBox.information(self, self.tr("Generate weights from shapefile"), self.tr("Please specify input polygon vector layer"))
         # elif self.outShape.text() == "":
@@ -39,7 +40,8 @@ class weightsdialog(QDialog, Ui_Weight):
         # elif self.lnField.text() == "":
             # QMessageBox.information(self, self.tr("Sum Line Lengths In Polyons"), self.tr("Please specify output length field"))
         else:
-            shapefile = self.comboBox.currentText()
+            #shapefile = self.comboBox.currentText()
+            shapefile = "/home/mady/Downloads/Iowa.shp"
             # inLns = self.inPoint.currentText()
             # inField = self.lnField.text()
             # outPath = self.outShape.text()
@@ -56,10 +58,11 @@ class weightsdialog(QDialog, Ui_Weight):
             #    self.vlayer = QgsVectorLayer(outPath, unicode(outName), "ogr")
             #    QgsMapLayerRegistry.instance().addMapLayer(self.vlayer)
         # self.progressBar.setValue(0)
-        self.pushButton.setEnabled( True )
+        self.buttonOk.setEnabled( True )
 
 
     def contiguity_from_shapefile(shapefile, criteria='rook'):
+        print shapefile
         if criteria == 'rook':
 	    PS.rook_from_shapefile(shapefile)
             abb = 'r'

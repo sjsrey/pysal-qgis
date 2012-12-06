@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>344</width>
-    <height>113</height>
+    <width>394</width>
+    <height>135</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
     <rect>
      <x>80</x>
      <y>20</y>
-     <width>211</width>
+     <width>311</width>
      <height>21</height>
     </rect>
    </property>
@@ -39,14 +39,46 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>80</y>
-     <width>156</width>
-     <height>23</height>
+     <x>210</x>
+     <y>100</y>
+     <width>171</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>141</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Queen Contiquity</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_2">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>60</y>
+     <width>141</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Rook Contiguity</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
@@ -59,12 +91,12 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>247</x>
-     <y>91</y>
+     <x>295</x>
+     <y>110</y>
     </hint>
     <hint type="destinationlabel">
-     <x>171</x>
-     <y>56</y>
+     <x>196</x>
+     <y>67</y>
     </hint>
    </hints>
   </connection>
@@ -72,15 +104,15 @@
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
    <receiver>Dialog</receiver>
-   <slot>accept()</slot>
+   <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>247</x>
-     <y>91</y>
+     <x>295</x>
+     <y>110</y>
     </hint>
     <hint type="destinationlabel">
-     <x>171</x>
-     <y>56</y>
+     <x>196</x>
+     <y>67</y>
     </hint>
    </hints>
   </connection>
