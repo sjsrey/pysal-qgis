@@ -29,7 +29,8 @@ sys.path.append( os.path.abspath( os.path.dirname( __file__) + '/tools') )
 
 # import tools
 # import globalAuto, localAuto, weights
-import globalAuto, doSumLines, doAbout, globalgearyDialog, weights
+import globalAuto, doSumLines, doAbout, globalgearyDialog
+import weightsFromShapefile
 
 class Pysal: 
 
@@ -139,9 +140,9 @@ class Pysal:
     dlg1.show()
     result = dlg1.exec_() 
 
-  def matweight( self ):
-    d = weights.weightsdialog(self.iface)
-    result = d.exec_()
+  def matweight( self ) :
+    d = weightsFromShapefile.weightsdialog( self.iface )
+    d.exec_()
 
   #def globalgeary( self ):
   #  d = globalAuto,globalAutoDialog( self.iface, 2 )
