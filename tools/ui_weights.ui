@@ -31,7 +31,7 @@
     <rect>
      <x>80</x>
      <y>20</y>
-     <width>311</width>
+     <width>221</width>
      <height>21</height>
     </rect>
    </property>
@@ -81,6 +81,19 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QToolButton" name="toolButton">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>20</y>
+     <width>61</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Browse</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
@@ -109,6 +122,22 @@
     <hint type="sourcelabel">
      <x>295</x>
      <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>196</x>
+     <y>67</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButton</sender>
+   <signal>pressed()</signal>
+   <receiver>Dialog</receiver>
+   <slot>open()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>350</x>
+     <y>30</y>
     </hint>
     <hint type="destinationlabel">
      <x>196</x>

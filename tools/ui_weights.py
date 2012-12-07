@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_weights.ui'
 #
-# Created: Thu Dec 06 15:58:26 2012
+# Created: Thu Dec 06 17:13:11 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,7 +24,7 @@ class Ui_Dialog(object):
         self.label.setText(QtGui.QApplication.translate("Dialog", "Shapefile", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setObjectName(_fromUtf8("label"))
         self.comboBox = QtGui.QComboBox(Dialog)
-        self.comboBox.setGeometry(QtCore.QRect(80, 20, 311, 21))
+        self.comboBox.setGeometry(QtCore.QRect(80, 20, 221, 21))
         self.comboBox.setObjectName(_fromUtf8("comboBox"))
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(210, 100, 171, 21))
@@ -40,10 +40,15 @@ class Ui_Dialog(object):
         self.radioButton_2.setText(QtGui.QApplication.translate("Dialog", "Rook Contiguity", None, QtGui.QApplication.UnicodeUTF8))
         self.radioButton_2.setChecked(True)
         self.radioButton_2.setObjectName(_fromUtf8("radioButton_2"))
+        self.toolButton = QtGui.QToolButton(Dialog)
+        self.toolButton.setGeometry(QtCore.QRect(320, 20, 61, 21))
+        self.toolButton.setText(QtGui.QApplication.translate("Dialog", "Browse", None, QtGui.QApplication.UnicodeUTF8))
+        self.toolButton.setObjectName(_fromUtf8("toolButton"))
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
+        QtCore.QObject.connect(self.toolButton, QtCore.SIGNAL(_fromUtf8("pressed()")), Dialog.open)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
