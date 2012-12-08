@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>401</width>
-    <height>416</height>
+    <width>403</width>
+    <height>498</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>380</y>
+     <y>460</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -34,11 +34,11 @@
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>364</width>
+     <width>361</width>
      <height>52</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="VLayout1">
+   <layout class="QVBoxLayout" name="VLayout_1">
     <item>
      <widget class="QLabel" name="label1">
       <property name="text">
@@ -60,7 +60,7 @@
      <height>52</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="VLayout2">
+   <layout class="QVBoxLayout" name="VLayout_2">
     <item>
      <widget class="QLabel" name="label2">
       <property name="text">
@@ -73,7 +73,29 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget_3">
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>270</y>
+     <width>361</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="VLayout_5">
+    <item>
+     <widget class="QLabel" name="label5">
+      <property name="text">
+       <string>Spatial Autocorrelation Result</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="SAresult"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_4">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -82,40 +104,57 @@
      <height>52</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="VLayout3">
+   <layout class="QVBoxLayout" name="VLayout_3">
     <item>
      <widget class="QLabel" name="label3">
       <property name="text">
-       <string>Weights Matrix FIle</string>
+       <string>Weights FIle ID Variable</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="inWeight"/>
+     <widget class="QComboBox" name="idVariable"/>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>200</y>
+     <y>190</y>
      <width>361</width>
-     <height>171</height>
+     <height>71</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="VLayout4">
-    <item>
-     <widget class="QLabel" name="label4">
-      <property name="text">
-       <string>Spatial Autocorrelation Result</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QTextBrowser" name="textBrowser"/>
-    </item>
-   </layout>
+   <property name="title">
+    <string>Contiguity Weight</string>
+   </property>
+   <widget class="QRadioButton" name="queen">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>20</y>
+      <width>359</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Queen Contiguity</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rook">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>40</y>
+      <width>359</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Rook Contiguity</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
