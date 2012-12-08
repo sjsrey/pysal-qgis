@@ -90,11 +90,12 @@ class globalMoranDialog(QDialog, Ui_Dialog):
 	a=range(len(l))
 	l1=np.array(l).flatten().tolist()
 	d=dict(zip(a,l1))
-	n=len(l)+2
+	fieldList=ftools_utils.getFieldList(vlayer)
+	#n=len(fieldList)+1
 	vlayer.startEditing()
 	for i in a:
 	    fid=int(i)
-	    vlayer.changeAttributeValue(fid,n,d[i]) #index of the new added field
+	    vlayer.changeAttributeValue(fid,25,d[i]) #index of the new added field
 	vlayer.commitChanges()
 	#if vlayer.commitChanges() == "True": self.SAresult.text()="Done!"
 	#else: self.SAresult.text()="Can't make it!"
