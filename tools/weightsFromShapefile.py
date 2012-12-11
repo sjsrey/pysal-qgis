@@ -39,6 +39,7 @@ from ui_weights import Ui_Dialog
 
 import pysal as PS
 import numpy as NP
+import os
 
 class weightsdialog(QDialog, Ui_Dialog):
 
@@ -47,6 +48,7 @@ class weightsdialog(QDialog, Ui_Dialog):
         self.iface = iface
         # Set up the user interface from Designer.
         self.setupUi(self)
+
         # QObject.connect(self.toolOut, SIGNAL("clicked()"), self.outFile)
         self.setWindowTitle(self.tr("Generate weights"))
         self.buttonOk = self.buttonBox.button( QDialogButtonBox.Ok )
@@ -57,9 +59,14 @@ class weightsdialog(QDialog, Ui_Dialog):
         # self.inPoint.addItems(layers)
         layers = ftools_utils.getLayerNames([QGis.Polygon])
         self.comboBox.addItems(layers)
-        self.comboBox.setItemText(0,'/home/mady/Downloads/Iowa.shp')
+        # self.comboBox.setItemText(0,'/home/everett/Desktop/shapes/Iowa.shp')
+        # aLayer = self.qgis.utils.iface.activeLayer()
+        # print aLayer
+        # layerPath = QFileInfo( self.aLayer[ 0 ]).absoluteFilePath()
+        
         #QObject.connect(self.comboBox, SIGNAL("accepted()"), self.accept)
         # rook = 'rook'ected
+        
         
     def accept(self):
         self.buttonOk.setEnabled( False )
@@ -74,9 +81,12 @@ class weightsdialog(QDialog, Ui_Dialog):
         else:
             #shapefile = QString("/home/everett/documents/pysal-qgis/dev/Iowa.shp")
             print "hi"
-            #shapefile = self.comboBox.currentText()       
-            shapefile = '/home/mady/Downloads/Iowa.shp' 
-            print shapefile
+            # shapefile = self.comboBox.currentText()       
+            basePath = os.path.dirname( unicode( self.iface.activeLayer().dataProvider().dataSourceUri() ) )
+            myfilepath = unicode(basePath + "/" + self.comboBox.currentText() + ".shp")
+            print myfilepath
+            shapefile = myfilepath
+            # print shapefile.toString()
             #if shapefile.contains("\\"):
             #   shapefile =  shapefile.right((shapefile.length() - shapefile.lastIndexOf("/")) - 1)
             # inLns = self.inPoint.currentText()
@@ -91,11 +101,11 @@ class weightsdialog(QDialog, Ui_Dialog):
             #self.contiguity_from_shapefile(shapefile)
             criteria = 'queen'
             if criteria == 'rook':
-	       w = PS.rook_from_shapefile(shapefile)
-               abb = 'r'
+                w = PS.rook_from_shapefile(shapefile)
+                abb = 'r'
     	    else:
-               w = PS.queen_from_shapefile(shapefile)
-               abb = 'q'
+                w = PS.queen_from_shapefile(shapefile)
+                abb = 'q'
     	    
             cards = NP.array(w.cardinalities.values())
     	    cards.shape = (len(cards),1)
