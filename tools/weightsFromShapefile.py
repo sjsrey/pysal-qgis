@@ -99,13 +99,13 @@ class weightsdialog(QDialog, Ui_Dialog):
             # if outName.endsWith(".shp"):
             #    outName = outName.left(outName.length() - 4)
             #self.contiguity_from_shapefile(shapefile)
-            criteria = 'queen'
-            if criteria == 'rook':
-                w = PS.rook_from_shapefile(shapefile)
-                abb = 'r'
-    	    else:
+            # criteria = 'queen'
+            if self.radioButton.isChecked():
                 w = PS.queen_from_shapefile(shapefile)
                 abb = 'q'
+    	    else:
+                w = PS.rook_from_shapefile(shapefile)
+                abb = 'r'
     	    
             cards = NP.array(w.cardinalities.values())
     	    cards.shape = (len(cards),1)
