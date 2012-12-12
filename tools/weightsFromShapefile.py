@@ -1,4 +1,4 @@
-#                                                                                                                   -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 #-----------------------------------------------------------
 # 
 # Sum Lines In Polygons
@@ -103,18 +103,11 @@ class weightsdialog(QDialog, Ui_Dialog):
             #    outName = outName.left(outName.length() - 4)
             # self.contiguity_from_shapefile(shapefile)
             if self.radioButton.isChecked():
-               criteria = 'queen'
-            else:
-               criteria = 'rook'
-
-            if criteria == 'rook':
-	       w = PS.rook_from_shapefile(shapefile)
-               abb = 'r'
+                w = PS.queen_from_shapefile(shapefile)
+                abb = 'q'
     	    else:
-               print 'loop'
-               print type(shapefile)
-               w = PS.queen_from_shapefile(shapefile)
-               abb = 'q'
+                w = PS.rook_from_shapefile(shapefile)
+                abb = 'r'
     	    
             cards = NP.array(w.cardinalities.values())
     	    cards.shape = (len(cards),1)
@@ -123,8 +116,7 @@ class weightsdialog(QDialog, Ui_Dialog):
     	    gal.write(w)
     	    gal.close()
             
-            QDialog.accept(self)
-            # return cards
+            QDialog.accept(self)            # return cards
                         
         
 
