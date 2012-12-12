@@ -41,6 +41,7 @@ from ui_weights import Ui_Dialog
 
 import pysal as PS
 import numpy as NP
+import os
 
 class weightsdialog(QDialog, Ui_Dialog):
 
@@ -49,7 +50,11 @@ class weightsdialog(QDialog, Ui_Dialog):
         self.iface = iface
         # Set up the user interface from Designer.
         self.setupUi(self)
+<<<<<<< HEAD
         self.shapefile = ''
+=======
+
+>>>>>>> ef3ef910d646c42dd8afde69838c0bb044aa917e
         # QObject.connect(self.toolOut, SIGNAL("clicked()"), self.outFile)
         QObject.connect(self.toolButton, SIGNAL("clicked()"), self.namefile)
         self.setWindowTitle(self.tr("Generate weights"))
@@ -60,6 +65,7 @@ class weightsdialog(QDialog, Ui_Dialog):
         self.lineEdit.setText("")
         # layers = ftools_utils.getLayerNames([QGis.Line])
         # self.inPoint.addItems(layers)
+<<<<<<< HEAD
         if len(str(ftools_utils.getLayerNames([QGis.Polygon]))) > 2:
            self.shapefile = str(ftools_utils.getLayerNames([QGis.Polygon]))
            self.shapefile = self.shapefile.split('|')[0]
@@ -69,8 +75,18 @@ class weightsdialog(QDialog, Ui_Dialog):
         #self.comboBox.setItemText(0,'Iowa')
         #print 'text in combo'
         #print self.comboBox.currentText()
+=======
+        layers = ftools_utils.getLayerNames([QGis.Polygon])
+        self.comboBox.addItems(layers)
+        # self.comboBox.setItemText(0,'/home/everett/Desktop/shapes/Iowa.shp')
+        # aLayer = self.qgis.utils.iface.activeLayer()
+        # print aLayer
+        # layerPath = QFileInfo( self.aLayer[ 0 ]).absoluteFilePath()
+        
+>>>>>>> ef3ef910d646c42dd8afde69838c0bb044aa917e
         #QObject.connect(self.comboBox, SIGNAL("accepted()"), self.accept)
         # rook = 'rook'ected
+        
         
     def accept(self):
         # self.buttonOk.setEnabled( False )
@@ -87,9 +103,18 @@ class weightsdialog(QDialog, Ui_Dialog):
         else:
             #shapefile = QString("/home/everett/documents/pysal-qgis/dev/Iowa.shp")
             print "hi"
+<<<<<<< HEAD
             #shapefile = self.comboBox.currentText()       
             #shapefile = '/home/mady/Downloads/Iowa.shp' 
             shapefile = str(self.shapefile)
+=======
+            # shapefile = self.comboBox.currentText()       
+            basePath = os.path.dirname( unicode( self.iface.activeLayer().dataProvider().dataSourceUri() ) )
+            myfilepath = unicode(basePath + "/" + self.comboBox.currentText() + ".shp")
+            print myfilepath
+            shapefile = myfilepath
+            # print shapefile.toString()
+>>>>>>> ef3ef910d646c42dd8afde69838c0bb044aa917e
             #if shapefile.contains("\\"):
             #   shapefile =  shapefile.right((shapefile.length() - shapefile.lastIndexOf("/")) - 1)
             # inLns = self.inPoint.currentText()
@@ -101,6 +126,7 @@ class weightsdialog(QDialog, Ui_Dialog):
             #    outName = outPath.right((outPath.length() - outPath.lastIndexOf("/")) - 1)
             # if outName.endsWith(".shp"):
             #    outName = outName.left(outName.length() - 4)
+<<<<<<< HEAD
             # self.contiguity_from_shapefile(shapefile)
             if self.radioButton.isChecked():
                criteria = 'queen'
@@ -115,6 +141,16 @@ class weightsdialog(QDialog, Ui_Dialog):
                print type(shapefile)
                w = PS.queen_from_shapefile(shapefile)
                abb = 'q'
+=======
+            #self.contiguity_from_shapefile(shapefile)
+            # criteria = 'queen'
+            if self.radioButton.isChecked():
+                w = PS.queen_from_shapefile(shapefile)
+                abb = 'q'
+    	    else:
+                w = PS.rook_from_shapefile(shapefile)
+                abb = 'r'
+>>>>>>> ef3ef910d646c42dd8afde69838c0bb044aa917e
     	    
             cards = NP.array(w.cardinalities.values())
     	    cards.shape = (len(cards),1)
