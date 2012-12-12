@@ -179,7 +179,7 @@ def getLayerNames( vTypes ):
         for name, layer in layermap.iteritems():
             if layer.type() == QgsMapLayer.VectorLayer:
                 if layer.geometryType() in vTypes:
-                    layerlist.append( unicode( layer.name() ) )
+                    layerlist.append( unicode( layer.dataProvider().dataSourceUri() ) )
             elif layer.type() == QgsMapLayer.RasterLayer:
                 if "Raster" in vTypes:
                     layerlist.append( unicode( layer.name() ) )

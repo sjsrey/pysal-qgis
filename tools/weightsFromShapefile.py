@@ -34,8 +34,10 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import ftools_utils
+from PyQt4 import QtCore, QtGui
 from qgis.core import *
 from ui_weights import Ui_Dialog
+
 
 import pysal as PS
 import numpy as NP
@@ -47,24 +49,35 @@ class weightsdialog(QDialog, Ui_Dialog):
         self.iface = iface
         # Set up the user interface from Designer.
         self.setupUi(self)
+        self.shapefile = ''
         # QObject.connect(self.toolOut, SIGNAL("clicked()"), self.outFile)
+        QObject.connect(self.toolButton, SIGNAL("clicked()"), self.namefile)
         self.setWindowTitle(self.tr("Generate weights"))
-        self.buttonOk = self.buttonBox.button( QDialogButtonBox.Ok )
-        # populate layer list
+        # self.buttonOk = self.buttonBox.button( QDialogButtonBox.Ok )
+               # populate layer list
         # self.progressBar.setValue(0)
         mapCanvas = self.iface.mapCanvas()
+        self.lineEdit.setText("")
         # layers = ftools_utils.getLayerNames([QGis.Line])
         # self.inPoint.addItems(layers)
-        layers = ftools_utils.getLayerNames([QGis.Polygon])
-        self.comboBox.addItems(layers)
-        self.comboBox.setItemText(0,'/home/mady/Downloads/Iowa.shp')
+        if len(str(ftools_utils.getLayerNames([QGis.Polygon]))) > 2:
+           self.shapefile = str(ftools_utils.getLayerNames([QGis.Polygon]))
+           self.shapefile = self.shapefile.split('|')[0]
+           self.shapefile = self.shapefile.split("u'")[-1]           
+           print self.shapefile
+           self.comboBox.addItem(str(self.shapefile))
+        #self.comboBox.setItemText(0,'Iowa')
+        #print 'text in combo'
+        #print self.comboBox.currentText()
         #QObject.connect(self.comboBox, SIGNAL("accepted()"), self.accept)
         # rook = 'rook'ected
         
     def accept(self):
-        self.buttonOk.setEnabled( False )
-        if self.comboBox.currentText() == "":
-            QMessageBox.information(self, self.tr("Weights from Shapefile"), self.tr("Please specify input polygon vector layer"))
+        # self.buttonOk.setEnabled( False )
+        print len(self.comboBox.currentText())
+        print len(self.lineEdit.text())
+        if len(self.comboBox.currentText()) == 0 and self.lineEdit.text() == "":
+            QMessageBox.information(self, self.tr("Weights from Shapefile"), self.tr("Please select input polygon vector layer"))
         # elif self.outShape.text() == "":
         #    QMessageBox.information(self, self.tr("Sum Line Lengths In Polyons"), self.tr("Please specify output shapefile"))
         # elif self.inPoint.currentText() == "":
@@ -75,8 +88,8 @@ class weightsdialog(QDialog, Ui_Dialog):
             #shapefile = QString("/home/everett/documents/pysal-qgis/dev/Iowa.shp")
             print "hi"
             #shapefile = self.comboBox.currentText()       
-            shapefile = '/home/mady/Downloads/Iowa.shp' 
-            print shapefile
+            #shapefile = '/home/mady/Downloads/Iowa.shp' 
+            shapefile = str(self.shapefile)
             #if shapefile.contains("\\"):
             #   shapefile =  shapefile.right((shapefile.length() - shapefile.lastIndexOf("/")) - 1)
             # inLns = self.inPoint.currentText()
@@ -88,12 +101,18 @@ class weightsdialog(QDialog, Ui_Dialog):
             #    outName = outPath.right((outPath.length() - outPath.lastIndexOf("/")) - 1)
             # if outName.endsWith(".shp"):
             #    outName = outName.left(outName.length() - 4)
-            #self.contiguity_from_shapefile(shapefile)
-            criteria = 'queen'
+            # self.contiguity_from_shapefile(shapefile)
+            if self.radioButton.isChecked():
+               criteria = 'queen'
+            else:
+               criteria = 'rook'
+
             if criteria == 'rook':
 	       w = PS.rook_from_shapefile(shapefile)
                abb = 'r'
     	    else:
+               print 'loop'
+               print type(shapefile)
                w = PS.queen_from_shapefile(shapefile)
                abb = 'q'
     	    
@@ -103,8 +122,11 @@ class weightsdialog(QDialog, Ui_Dialog):
     	    gal = PS.open(galfile,'w')
     	    gal.write(w)
     	    gal.close()
-
-    	    return cards
+            
+            QDialog.accept(self)
+            # return cards
+                        
+        
 
             # self.outShape.clear()
             # addToTOC = QMessageBox.question(self, self.tr("Sum line lengths"), self.tr("Created output shapefile:\n%1\n\nWould you like to add the new layer to the TOC?").arg(unicode(outPath)), QMessageBox.Yes, QMessageBox.No, QMessageBox.NoButton)
@@ -112,7 +134,13 @@ class weightsdialog(QDialog, Ui_Dialog):
             #    self.vlayer = QgsVectorLayer(outPath, unicode(outName), "ogr")
             #    QgsMapLayerRegistry.instance().addMapLayer(self.vlayer)
         # self.progressBar.setValue(0)
-        self.buttonOk.setEnabled( True )
+        # self.buttonOk.setEnabled( True )
+    
+    def namefile(self):
+        self.shapefile = QFileDialog.getOpenFileName(self, 'Open shape', '/home', 'Shape Files (*.shp)')
+        self.lineEdit.setText(str(self.shapefile))
+        print self.shapefile
+        
 
     def outFile(self):
         self.outShape.clear()
@@ -121,23 +149,25 @@ class weightsdialog(QDialog, Ui_Dialog):
             return
         self.outShape.setText( QString( self.shapefileName ) )
 
-#    def contiguity_from_shapefile(shapefile, criteria='rook'):
-#        print shapefile
-#        print type(shapefile)
-#        if criteria == 'rook':
-#	    w = PS.rook_from_shapefile(shapefile)
-#            abb = 'r'
-#    	else:
-#            w = PS.queen_from_shapefile(shapefile)
-#            abb = 'q'
-#    	    cards = NP.array(w.cardinalities.values())
-#    	    cards.shape = (len(cards),1)
-#    	    galfile = shapefile.split(".")[0] + "_" + abb + ".gal"
-#    	    gal = PS.open(galfile,'w')
-#    	    gal.write(w)
-#    	    gal.close()
+    # def contiguity_from_shapefile(shapefile, criteria='rook'):
+    #    shapefile = str(shapefile)
+    #    print type(shapefile)
+    #    print shapefile
+    #    if criteria == 'rook':
+    #	    w = PS.rook_from_shapefile(shapefile)
+    #        abb = 'r'
+    #	else:
+    #        w = PS.queen_from_shapefile(shapefile)
+    #        abb = 'q'
+    #
+    #    cards = NP.array(w.cardinalities.values())
+    # 	cards.shape = (len(cards),1)
+    #	galfile = shapefile.split(".")[0] + "_" + abb + ".gal"
+    #	gal = PS.open(galfile,'w')
+    #	gal.write(w)
+    #	gal.close()
 
-#    	return cards
+    #	return cards
 
 
     def compute(self, inPoly, inLns, inField, outPath, progressBar):
