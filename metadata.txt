@@ -13,8 +13,8 @@ version=version 0.1
 ; if they are not filled
 homepage=http://code.google.com/p/pysal/
 tracker=http://code.google.com/p/pysal/
-repository=https://github.com/sjsrey/pysal-qgis=
-icon=pysal.png
+repository=https://github.com/sjsrey/pysal-qgis
+icon=:/icons/default/pysal.png
 
 ; experimental flag
 experimental=True
