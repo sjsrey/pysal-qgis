@@ -59,13 +59,13 @@ class globalMoranDialog(QDialog, Ui_Dialog):
 	    changedField=ftools_utils.getFieldList(changedLayer)
 	    changedID=ftools_utils.getFieldList(changedLayer)
 	    for i in changedField:	
-	        if changedField[i].type() == QVariant.Int or \
-		changedField[i].type() == QVariant.String:
-		    self.inField.addItem(unicode(changedField[i].name()))
+	        #if changedField[i].type() == QVariant.Int or \
+		#changedField[i].type() == QVariant.String:
+	        self.inField.addItem(unicode(changedField[i].name()))
 	    for i in changedID:
-	        if changedID[i].type() == QVariant.Int or \
-	        changedID[i].type() == QVariant.String:
-		    self.idVariable.addItem(unicode(changedID[i].name()))
+	        #if changedID[i].type() == QVariant.Int or \
+	        #changedID[i].type() == QVariant.String:
+	        self.idVariable.addItem(unicode(changedID[i].name()))
 	
 
 
@@ -73,29 +73,45 @@ class globalMoranDialog(QDialog, Ui_Dialog):
     def compute(self, vlayer, tfield, idvar):
 	vlayer=qgis.utils.iface.activeLayer()
 	idvar=self.idVariable.currentText()
+        print type(idvar)
 	tfield=self.inField.currentText()
+        print type(tfield)
 	provider=vlayer.dataProvider()
 	allAttrs=provider.attributeIndexes()
 	caps=vlayer.dataProvider().capabilities()
 	if caps & QgsVectorDataProvider.AddAttributes:
 	    res = vlayer.dataProvider().addAttributes([QgsField("TestField", QVariant.Double)])
 	wp="/home/evazhang/pysal-qgis/dev/Iowa.shp"
-	w=py.rook_from_shapefile(wp, idVariable="POLY_ID")
+	w=py.rook_from_shapefile(wp, idVariable=unicode(idvar))
 	w1=wp[:-3]+"dbf"
 	db=py.open(w1)
-	y=np.array(db.by_col["SALE100KPE"])
-	np.random.seed(12345)
+	y=np.array(db.by_col[unicode(tfield)])
+      	np.random.seed(12345)
 	lm=py.Moran_Local(y,w)
 	l=lm.p_sim
+	
+	# Replace insignificant values with the number 5:
+	for i in range(len(l)):
+	    if l[i] > 0.05:
+		l[i] = 5 
+
+	# Replace the significant values with their quadrant:
+	for i in range(len(l)):
+	    if l[i] <= 0.05:
+		l[i] =lm.q[i] 
+
 	a=range(len(l))
 	l1=np.array(l).flatten().tolist()
 	d=dict(zip(a,l1))
 	fieldList=ftools_utils.getFieldList(vlayer)
-	#n=len(fieldList)+1
+	print len(fieldList)
+	n=len(fieldList)-1
 	vlayer.startEditing()
 	for i in a:
 	    fid=int(i)
-	    vlayer.changeAttributeValue(fid,25,d[i]) #index of the new added field
+	    print fid
+	    vlayer.changeAttributeValue(fid,n,d[i])
+	    print d[i] #index of the new added field
 	vlayer.commitChanges()
 	#if vlayer.commitChanges() == "True": self.SAresult.text()="Done!"
 	#else: self.SAresult.text()="Can't make it!"
