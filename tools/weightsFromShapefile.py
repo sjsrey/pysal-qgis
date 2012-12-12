@@ -1,35 +1,4 @@
-#-*- coding: utf-8 -*-
-#-----------------------------------------------------------
-# 
-# Sum Lines In Polygons
-#
-# A QGIS plugin for calculating the total sum of line 
-# lengths in each polygon of an input vector polygon layer.
-#
-# Copyright (C) 2008  Carson Farmer
-#
-# EMAIL: carson.farmer (at) gmail.com
-# WEB  : www.geog.uvic.ca/spar/carson
-#
-#-----------------------------------------------------------
-# 
-# licensed under the terms of GNU GPL 2
-# 
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-# 
-#---------------------------------------------------------------------
+# Plugin for creating a .gal file from vector Polygons.
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -37,7 +6,6 @@ import ftools_utils
 from PyQt4 import QtCore, QtGui
 from qgis.core import *
 from ui_weights import Ui_Dialog
-
 
 import pysal as PS
 import numpy as NP
@@ -49,175 +17,76 @@ class weightsdialog(QDialog, Ui_Dialog):
         self.iface = iface
         # Set up the user interface from Designer.
         self.setupUi(self)
+        # define global shapefile variable
         self.shapefile = ''
-        # QObject.connect(self.toolOut, SIGNAL("clicked()"), self.outFile)
         QObject.connect(self.toolButton, SIGNAL("clicked()"), self.namefile)
-        self.setWindowTitle(self.tr("Generate weights"))
-        # self.buttonOk = self.buttonBox.button( QDialogButtonBox.Ok )
-               # populate layer list
-        # self.progressBar.setValue(0)
+        self.setWindowTitle(self.tr("Generate Weights"))
+
         mapCanvas = self.iface.mapCanvas()
+        # When there is no layer picked for the browse box, will initialize
+        # the global variable to be an empty string
         self.lineEdit.setText("")
-        # layers = ftools_utils.getLayerNames([QGis.Line])
-        # self.inPoint.addItems(layers)
-        if len(str(ftools_utils.getLayerNames([QGis.Polygon]))) > 2:
-           self.shapefile = str(ftools_utils.getLayerNames([QGis.Polygon]))
-           self.shapefile = self.shapefile.split('|')[0]
-           self.shapefile = self.shapefile.split("u'")[-1]           
-           print self.shapefile
-           self.comboBox.addItem(str(self.shapefile))
-        #self.comboBox.setItemText(0,'Iowa')
-        #print 'text in combo'
-        #print self.comboBox.currentText()
-        #QObject.connect(self.comboBox, SIGNAL("accepted()"), self.accept)
-        # rook = 'rook'ected
-        
+
+        self.shapefile = (self.getLayerPath([QGis.Polygon]))         
+        # insert paths into combo box
+        for layer in self.shapefile:
+            self.comboBox.addItem(layer)
+    
+    # Define method to run the plugin (includes PySAL logic)
     def accept(self):
-        # self.buttonOk.setEnabled( False )
-        print len(self.comboBox.currentText())
-        print len(self.lineEdit.text())
+        # look for open shapefile layers, if none 
         if len(self.comboBox.currentText()) == 0 and self.lineEdit.text() == "":
             QMessageBox.information(self, self.tr("Weights from Shapefile"), self.tr("Please select input polygon vector layer"))
+
         # elif self.outShape.text() == "":
         #    QMessageBox.information(self, self.tr("Sum Line Lengths In Polyons"), self.tr("Please specify output shapefile"))
-        # elif self.inPoint.currentText() == "":
-        #     QMessageBox.information(self, self.tr("Sum Line Lengths In Polyons"), self.tr("Please specify input line vector layer"))
-        # elif self.lnField.text() == "":
-        #    QMessageBox.information(self, self.tr("Sum Line Lengths In Polyons"), self.tr("Please specify output length field"))
         else:
-            #shapefile = QString("/home/everett/documents/pysal-qgis/dev/Iowa.shp")
-            print "hi"
-            #shapefile = self.comboBox.currentText()       
-            #shapefile = '/home/mady/Downloads/Iowa.shp' 
-            shapefile = str(self.shapefile)
-            #if shapefile.contains("\\"):
-            #   shapefile =  shapefile.right((shapefile.length() - shapefile.lastIndexOf("/")) - 1)
-            # inLns = self.inPoint.currentText()
-            # inField = self.lnField.text()
-            # outPath = self.outShape.text()
-            # if outPath.contains("\\"):
-            #    outName = outPath.right((outPath.length() - outPath.lastIndexOf("\\")) - 1)
-            # else:
-            #    outName = outPath.right((outPath.length() - outPath.lastIndexOf("/")) - 1)
-            # if outName.endsWith(".shp"):
-            #    outName = outName.left(outName.length() - 4)
-            # self.contiguity_from_shapefile(shapefile)
-            if self.radioButton.isChecked():
-                w = PS.queen_from_shapefile(shapefile)
-                abb = 'q'
-    	    else:
-                w = PS.rook_from_shapefile(shapefile)
-                abb = 'r'
-    	    
-            cards = NP.array(w.cardinalities.values())
-    	    cards.shape = (len(cards),1)
-    	    galfile = shapefile.split(".")[0] + "_" + abb + ".gal"
-    	    gal = PS.open(galfile,'w')
-    	    gal.write(w)
-    	    gal.close()
-            
-            QDialog.accept(self)            # return cards
-                        
-        
+            # run the PySAL logic
+            if str(self.comboBox.currentText()) == "":
+                shapefile = str(self.shapefile)
+            else:
+                shapefile = str(self.comboBox.currentText())
+                       
+                if self.radioButton.isChecked():
+                    w = PS.queen_from_shapefile(shapefile)
+                    abb = 'q'
+                else:
+                    w = PS.rook_from_shapefile(shapefile)
+                    abb = 'r'
+    	        cards = NP.array(w.cardinalities.values())
+    	        cards.shape = (len(cards),1)
+    	        galfile = shapefile.split(".")[0] + "_" + abb + ".gal"
+    	        gal = PS.open(galfile,'w')
+    	        gal.write(w)
+    	        gal.close()
+            QDialog.accept(self)
 
-            # self.outShape.clear()
-            # addToTOC = QMessageBox.question(self, self.tr("Sum line lengths"), self.tr("Created output shapefile:\n%1\n\nWould you like to add the new layer to the TOC?").arg(unicode(outPath)), QMessageBox.Yes, QMessageBox.No, QMessageBox.NoButton)
-            # if addToTOC == QMessageBox.Yes:
-            #    self.vlayer = QgsVectorLayer(outPath, unicode(outName), "ogr")
-            #    QgsMapLayerRegistry.instance().addMapLayer(self.vlayer)
-        # self.progressBar.setValue(0)
-        # self.buttonOk.setEnabled( True )
-    
+    # Browse file method
     def namefile(self):
         self.shapefile = QFileDialog.getOpenFileName(self, 'Open shape', '/home', 'Shape Files (*.shp)')
         self.lineEdit.setText(str(self.shapefile))
         print self.shapefile
         
 
-    def outFile(self):
-        self.outShape.clear()
-        ( self.shapefileName, self.encoding ) = ftools_utils.saveDialog( self )
-        if self.shapefileName is None or self.encoding is None:
-            return
-        self.outShape.setText( QString( self.shapefileName ) )
+    #def outFile(self):
+    #    self.outShape.clear()
+    #    ( self.shapefileName, self.encoding ) = ftools_utils.saveDialog( self )
+    #    if self.shapefileName is None or self.encoding is None:
+    #        return
+    #    self.outShape.setText( QString( self.shapefileName ) )
 
-    # def contiguity_from_shapefile(shapefile, criteria='rook'):
-    #    shapefile = str(shapefile)
-    #    print type(shapefile)
-    #    print shapefile
-    #    if criteria == 'rook':
-    #	    w = PS.rook_from_shapefile(shapefile)
-    #        abb = 'r'
-    #	else:
-    #        w = PS.queen_from_shapefile(shapefile)
-    #        abb = 'q'
-    #
-    #    cards = NP.array(w.cardinalities.values())
-    # 	cards.shape = (len(cards),1)
-    #	galfile = shapefile.split(".")[0] + "_" + abb + ".gal"
-    #	gal = PS.open(galfile,'w')
-    #	gal.write(w)
-    #	gal.close()
-
-    #	return cards
-
-
-    def compute(self, inPoly, inLns, inField, outPath, progressBar):
-        polyLayer = ftools_utils.getVectorLayerByName(inPoly)
-        lineLayer = ftools_utils.getVectorLayerByName(inLns)
-        polyProvider = polyLayer.dataProvider()
-        lineProvider = lineLayer.dataProvider()
-        if polyProvider.crs() <> lineProvider.crs():
-            QMessageBox.warning(self, self.tr("CRS warning!"), self.tr("Warning: Input layers have non-matching CRS.\nThis may cause unexpected results."))
-        allAttrs = polyProvider.attributeIndexes()
-        polyProvider.select(allAttrs)
-        allAttrs = lineProvider.attributeIndexes()
-        lineProvider.select(allAttrs)
-        fieldList = ftools_utils.getFieldList(polyLayer)
-        index = polyProvider.fieldNameIndex(unicode(inField))
-        if index == -1:
-            index = polyProvider.fieldCount()
-            field = QgsField(unicode(inField), QVariant.Double, "real", 24, 15, self.tr("length field"))
-            fieldList[index] = field
-        sRs = polyProvider.crs()
-        inFeat = QgsFeature()
-        inFeatB = QgsFeature()
-        outFeat = QgsFeature()
-        inGeom = QgsGeometry()
-        outGeom = QgsGeometry()
-        distArea = QgsDistanceArea()
-        lineProvider.rewind()
-        start = 15.00
-        add = 85.00 / polyProvider.featureCount()
-        check = QFile(self.shapefileName)
-        if check.exists():
-            if not QgsVectorFileWriter.deleteShapeFile(self.shapefileName):
-                return
-        writer = QgsVectorFileWriter(self.shapefileName, self.encoding, fieldList, polyProvider.geometryType(), sRs)
-        #writer = QgsVectorFileWriter(outPath, "UTF-8", fieldList, polyProvider.geometryType(), sRs)
-        spatialIndex = ftools_utils.createIndex( lineProvider )
-        while polyProvider.nextFeature(inFeat):
-            inGeom = QgsGeometry(inFeat.geometry())
-            atMap = inFeat.attributeMap()
-            lineList = []
-            length = 0
-            #(check, lineList) = lineLayer.featuresInRectangle(inGeom.boundingBox(), True, False)
-            #lineLayer.select(inGeom.boundingBox(), False)
-            #lineList = lineLayer.selectedFeatures()
-            lineList = spatialIndex.intersects(inGeom.boundingBox())
-            if len(lineList) > 0: check = 0
-            else: check = 1
-            if check == 0:
-                for i in lineList:
-                    lineProvider.featureAtId( int( i ), inFeatB , True, allAttrs )
-                    tmpGeom = QgsGeometry( inFeatB.geometry() )
-                    if inGeom.intersects(tmpGeom):
-                        outGeom = inGeom.intersection(tmpGeom)
-                        length = length + distArea.measure(outGeom)
-            outFeat.setGeometry(inGeom)
-            outFeat.setAttributeMap(atMap)
-            outFeat.addAttribute(index, QVariant(length))
-            writer.addFeature(outFeat)
-            start = start + 1
-            progressBar.setValue(start)
-        del writer
+    # Define method for building file paths for PySAL from open layers in QGIS
+    def getLayerPath( self, vTypes ):
+        layermap = QgsMapLayerRegistry.instance().mapLayers()
+        layerlist = []
+        for name, layer in layermap.iteritems():
+            if layer.type() == QgsMapLayer.VectorLayer:
+                if layer.geometryType() in vTypes:
+                    fullPath = unicode( layer.dataProvider().dataSourceUri() )
+                    fullPath = fullPath.split('|')[0]
+                    fullPath = fullPath.split("u'")[-1]
+                    layerlist.append(str(fullPath))
+                    # print layerlist
+            else:
+                pass
+        return layerlist
