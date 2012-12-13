@@ -1,5 +1,4 @@
-
-#---------------------------------------------------------------------
+# build global moran's I method. this will produce a single I variable
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -28,7 +27,6 @@ class globalMoranDialog(QDialog, Ui_Dialog):
 
 
 	# Layer List
-	# mapCanvas=self.iface.mapCanvas()
 	self.layerList= (self.getLayerName([QGis.Polygon]))
         self.layerpaths = (self.getLayerPath([QGis.Polygon]))
         paths = tuple(self.layerpaths)
@@ -37,6 +35,7 @@ class globalMoranDialog(QDialog, Ui_Dialog):
         for layer in self.layerList:
             self.inShape.addItem(layer)
 	
+    # check for shapefiles and fields
     def accept(self):
 	self.buttonOK.setEnabled( False )
 	if self.inShape.currentText() == "":
@@ -51,7 +50,6 @@ class globalMoranDialog(QDialog, Ui_Dialog):
             else:
                vlayer = str(self.dic[str(self.inShape.currentText())])
             
-	    # vlayer=self.inShape.currentText()
 	    tfield=self.inField.currentText()
 	    idvar=self.idVariable.currentText()
 	    if self.rook.isChecked():matType="Rook"
@@ -59,7 +57,7 @@ class globalMoranDialog(QDialog, Ui_Dialog):
 	    self.compute(vlayer,tfield,idvar,matType)
 	    self.buttonOK.setEnabled( True )
 
-
+    # designates the selected shapefile as the layer to pick attributes from
     def update(self,inputLayer):
 	self.inField.clear()
 	self.idVariable.clear()
@@ -76,14 +74,11 @@ class globalMoranDialog(QDialog, Ui_Dialog):
 	           self.idVariable.addItem(unicode(changedID[i].name()))
 	
 
-
-    #def rookMatrix(self, provider1, provider2, index1, index2)       
+    # run the pysal logic for global moran's I
     def compute(self, vlayer, tfield, idvar,matType):
 	vlayer=qgis.utils.iface.activeLayer()
 	idvar=self.idVariable.currentText()
-        # print type(idvar)
 	tfield=self.inField.currentText()
-        # print type(tfield)
 	provider=vlayer.dataProvider()
 	allAttrs=provider.attributeIndexes()
 	caps=vlayer.dataProvider().capabilities()
@@ -99,13 +94,11 @@ class globalMoranDialog(QDialog, Ui_Dialog):
 	w1=wp[:-3]+"dbf"
 	db=py.open(w1)
 	y=np.array(db.by_col[unicode(tfield)])
-      	#np.random.seed(12345)
 	mi = py.Moran(y,w)
-        #lm=py.Moran_Local(y,w)
-	#l=lm.p_sim
 	mg = mi.I
         self.SAresult.setText(str(mg))
 
+    # read file path for pysal inputs from open shapefiles
     def getLayerPath( self, vTypes ):
         layermap = QgsMapLayerRegistry.instance().mapLayers()
         layerPathList = []
@@ -116,11 +109,11 @@ class globalMoranDialog(QDialog, Ui_Dialog):
                     fullPath = fullPath.split('|')[0]
                     fullPath = fullPath.split("u'")[-1]
                     layerPathList.append(str(fullPath))
-                    # print layerlist
             else:
                 pass
         return layerPathList
 
+    # read layer names for gui display
     def getLayerName( self, vTypes ):
         layermap = QgsMapLayerRegistry.instance().mapLayers()
         layerNameList = []
@@ -131,37 +124,3 @@ class globalMoranDialog(QDialog, Ui_Dialog):
             else:
                 pass
         return layerNameList
-
-	  
-"""
-	# Replace insignificant values with the number 5:
-	for i in range(len(l)):
-	    if l[i] > 0.05:
-		l[i] = 5 
-
-	# Replace the significant values with their quadrant:
-	for i in range(len(l)):
-	    if l[i] <= 0.05:
-		l[i] =lm.q[i] 
-
-	a=range(len(l))
-	l1=np.array(l).flatten().tolist()
-	d=dict(zip(a,l1))
-	fieldList=ftools_utils.getFieldList(vlayer)
-	print len(fieldList)
-	n=len(fieldList)-1
-	vlayer.startEditing()
-	for i in a:
-	    fid=int(i)
-	    # print fid
-	    vlayer.changeAttributeValue(fid,n,d[i])
-	    # print d[i] #index of the new added field
-	vlayer.commitChanges()
-        QDialog.accept(self)
-	#if vlayer.commitChanges() == "True": self.SAresult.text()="Done!"
-	#else: self.SAresult.text()="Can't make it!"
-  
-"""
-
-
-
