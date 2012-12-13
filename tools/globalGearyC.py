@@ -104,7 +104,7 @@ class globalGearyCDialog(QDialog, Ui_Dialog):
         #lm=py.Moran_Local(y,w)
 	#l=lm.p_sim
 	gg = gc.C
-        self.SAresult.setText(str(gg))
+        self.SAresult.setText("The Global Geary's C index is " + str(gg))
 
     def getLayerPath( self, vTypes ):
         layermap = QgsMapLayerRegistry.instance().mapLayers()

@@ -96,7 +96,7 @@ class globalMoranDialog(QDialog, Ui_Dialog):
 	y=np.array(db.by_col[unicode(tfield)])
 	mi = py.Moran(y,w)
 	mg = mi.I
-        self.SAresult.setText(str(mg))
+        self.SAresult.setText("Global Moran's I index is " + str(mg))
 
     # read file path for pysal inputs from open shapefiles
     def getLayerPath( self, vTypes ):
