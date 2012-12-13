@@ -95,7 +95,7 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
         self.label1.setText(QtGui.QApplication.translate("Dialog", "Input Shapefile", None, QtGui.QApplication.UnicodeUTF8))
         self.label2.setText(QtGui.QApplication.translate("Dialog", "Target field", None, QtGui.QApplication.UnicodeUTF8))
-        self.label5.setText(QtGui.QApplication.translate("Dialog", "Spatial Autocorrelation Result", None, QtGui.QApplication.UnicodeUTF8))
+        self.label5.setText(QtGui.QApplication.translate("Dialog", "Cluster and Outlier Analysis Result:", None, QtGui.QApplication.UnicodeUTF8))
         self.label3.setText(QtGui.QApplication.translate("Dialog", "Weights FIle ID Variable", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("Dialog", "Contiguity Weight", None, QtGui.QApplication.UnicodeUTF8))
         self.queen.setText(QtGui.QApplication.translate("Dialog", "Queen Contiguity", None, QtGui.QApplication.UnicodeUTF8))
