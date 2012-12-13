@@ -27,9 +27,14 @@ class weightsdialog(QDialog, Ui_Dialog):
         # the global variable to be an empty string
         self.lineEdit.setText("")
 
-        self.shapefile = (self.getLayerPath([QGis.Polygon]))         
+        self.shapefile = (self.getLayerPath([QGis.Polygon]))
+        self.shapefileNames = (self.getLayerName([QGis.Polygon]))
+        paths = tuple(self.shapefile)
+        names = tuple(self.shapefileNames)
+        self.d = dict(zip(names,paths))
+
         # insert paths into combo box
-        for layer in self.shapefile:
+        for layer in self.shapefileNames:
             self.comboBox.addItem(layer)
     
     # Define method to run the plugin (includes PySAL logic)
@@ -45,7 +50,7 @@ class weightsdialog(QDialog, Ui_Dialog):
             if str(self.comboBox.currentText()) == "":
                 shapefile = str(self.shapefile)
             else:
-                shapefile = str(self.comboBox.currentText())
+                shapefile = str(self.d[str(self.comboBox.currentText())])
                        
                 if self.radioButton.isChecked():
                     w = PS.queen_from_shapefile(shapefile)
@@ -78,15 +83,27 @@ class weightsdialog(QDialog, Ui_Dialog):
     # Define method for building file paths for PySAL from open layers in QGIS
     def getLayerPath( self, vTypes ):
         layermap = QgsMapLayerRegistry.instance().mapLayers()
-        layerlist = []
+        layerPathList = []
         for name, layer in layermap.iteritems():
             if layer.type() == QgsMapLayer.VectorLayer:
                 if layer.geometryType() in vTypes:
                     fullPath = unicode( layer.dataProvider().dataSourceUri() )
                     fullPath = fullPath.split('|')[0]
                     fullPath = fullPath.split("u'")[-1]
-                    layerlist.append(str(fullPath))
+                    layerPathList.append(str(fullPath))
                     # print layerlist
             else:
                 pass
-        return layerlist
+        return layerPathList
+
+    def getLayerName( self, vTypes ):
+        layermap = QgsMapLayerRegistry.instance().mapLayers()
+        layerNameList = []
+        for name, layer in layermap.iteritems():
+            if layer.type() == QgsMapLayer.VectorLayer:
+                if layer.geometryType() in vTypes:
+                    layerNameList.append( unicode( layer.name() ) )
+            else:
+                pass
+        return layerNameList
+
