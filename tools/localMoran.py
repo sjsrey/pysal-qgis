@@ -56,12 +56,8 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	    # vlayer=self.inShape.currentText()
 	    tfield=self.inField.currentText()
 	    idvar=self.idVariable.currentText()
-	    if self.rook.isChecked():
-		matType="Rook"
-		self.queen.setEnabled( False )
-	    elif self.queen.isChecked(): 
-		matType="Queen"
-		self.rook.setEnabled( False )
+	    if self.rook.isChecked():matType="Rook"
+	    else: matType="Queen"
 	    self.compute(vlayer,tfield,idvar,matType)
 	    self.buttonApply.setEnabled( True )
 
