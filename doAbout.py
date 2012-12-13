@@ -38,7 +38,6 @@ class Dialog(QDialog, Ui_Dialog):
 
 	def getText(self):
 		return self.tr("""
-PySAL plugin for QGIS
 
 This is a group project for GPH 498/598 Geocomputation.
 
@@ -56,4 +55,4 @@ evazhang417
 		webbrowser.open("http://code.google.com/p/pysal/")
 
 	def openHelp(self):
-		webbrowser.open(currentPath + "/ftools_help.xml")
+		webbrowser.open("http://pysal.geodacenter.org/1.4/users/index.html")
