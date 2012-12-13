@@ -29,11 +29,7 @@ sys.path.append( os.path.abspath( os.path.dirname( __file__) + '/tools') )
 
 # import tools
 # import localMoran, weights
-<<<<<<< HEAD
-import localMoran, doAbout, globalgearyDialog, globalMoran
-=======
-import localMoran, doAbout, globalGearyC
->>>>>>> 7e47fedecdd0383a3f7864b03b9642bbbb50751c
+import localMoran, doAbout, globalGearyC, globalMoran
 import weightsFromShapefile
 
 class Pysal: 
@@ -125,20 +121,10 @@ class Pysal:
     d = localMoran.localMoranDialog ( self.iface )
     d.exec_()
 
-<<<<<<< HEAD
-  #def globalmoran( self ):
-  #  d = globalAuto.gaDialog ( self.iface, 1 )
-  #  d.exec_()
-
   def globalMoran( self ):
     d = globalMoran.globalMoranDialog ( self.iface )
     d.exec_()
 
-=======
->>>>>>> 7e47fedecdd0383a3f7864b03b9642bbbb50751c
-##  def globalGeary( self ):
-##    d = doSumLines.Dialog ( self.iface )
-##    d.exec_()
 
   def globalGearyC(self): 
     d=globalGearyC.globalGearyCDialog(self.iface)
