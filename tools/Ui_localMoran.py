@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'localMoran.ui'
 #
-# Created: Thu Dec 13 03:24:19 2012
+# Created: Thu Dec 13 05:05:27 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,11 +17,11 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(403, 421)
+        Dialog.resize(391, 428)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
-        self.buttonBox.setGeometry(QtCore.QRect(105, 380, 271, 27))
+        self.buttonBox.setGeometry(QtCore.QRect(110, 390, 271, 27))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Apply|QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Close)
+        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.layoutWidget = QtGui.QWidget(Dialog)
         self.layoutWidget.setGeometry(QtCore.QRect(20, 10, 361, 52))
@@ -48,7 +48,7 @@ class Ui_Dialog(object):
         self.inField.setObjectName(_fromUtf8("inField"))
         self.VLayout_2.addWidget(self.inField)
         self.verticalLayoutWidget = QtGui.QWidget(Dialog)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 270, 361, 91))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 270, 361, 103))
         self.verticalLayoutWidget.setObjectName(_fromUtf8("verticalLayoutWidget"))
         self.VLayout_5 = QtGui.QVBoxLayout(self.verticalLayoutWidget)
         self.VLayout_5.setMargin(0)

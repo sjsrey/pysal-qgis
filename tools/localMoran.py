@@ -23,8 +23,8 @@ class localMoranDialog(QDialog, Ui_Dialog):
         self.setupUi(self)
         self.setWindowTitle(self.tr("Local Moran's I"))
         QObject.connect(self.inShape, SIGNAL("currentIndexChanged(QString)"), self.update)
-	self.buttonClose = self.buttonBox.button( QDialogButtonBox.Close )	
-	self.buttonApply = self.buttonBox.button( QDialogButtonBox.Apply )
+	self.buttonOk = self.buttonBox.button( QDialogButtonBox.Ok )	
+	#self.buttonApply = self.buttonBox.button( QDialogButtonBox.ApplyRole )
 	self.buttonCancel = self.buttonBox.button( QDialogButtonBox.Cancel )
 
 
@@ -40,7 +40,7 @@ class localMoranDialog(QDialog, Ui_Dialog):
             self.inShape.addItem(layer)
 	
     def accept(self):
-	self.buttonOK.setEnabled( False )
+	self.buttonOk.setEnabled( False )
 	if self.inShape.currentText() == "":
             QMessageBox.information(self, self.tr("Local Moran's I"), self.tr("Please specify input shapefile"))
         elif self.inField.currentText() == "":
@@ -59,7 +59,7 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	    if self.rook.isChecked():matType="Rook"
 	    else: matType="Queen"
 	    self.compute(vlayer,tfield,idvar,matType)
-	    self.buttonApply.setEnabled( True )
+	    self.buttonOk.setEnabled( True )
 
 
     def update(self,inputLayer):
@@ -87,7 +87,11 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	allAttrs=provider.attributeIndexes()
 	caps=vlayer.dataProvider().capabilities()
 	if caps & QgsVectorDataProvider.AddAttributes:
-            TestField = tfield[:5]+"_qrr"
+            if matType == "Rook":
+               TestField = tfield[:7]+"_r"
+            else:
+               TestField = tfield[:7]+"_q"
+
 	    res = vlayer.dataProvider().addAttributes([QgsField(TestField, QVariant.Double)])
 	wp=str(self.dic[str(self.inShape.currentText())])
         if matType == "Rook":
@@ -125,7 +129,7 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	    vlayer.changeAttributeValue(fid,n,d[i])
 	    # print d[i] #index of the new added field
 	vlayer.commitChanges()
-	self.bottonClose.setEnabled( True )	
+	self.SAresult.setText("Significance values have been added to your attribute table!")
         #QDialog.accept(self)
 	 
 
