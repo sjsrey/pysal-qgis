@@ -88,7 +88,7 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	allAttrs=provider.attributeIndexes()
 	caps=vlayer.dataProvider().capabilities()
 	if caps & QgsVectorDataProvider.AddAttributes:
-            TestField = idvar[:5]+"_qrr"
+            TestField = tfield[:5]+"_qrr"
 	    res = vlayer.dataProvider().addAttributes([QgsField(TestField, QVariant.Double)])
 	wp=str(self.dic[str(self.inShape.currentText())])
         if matType == "Rook":

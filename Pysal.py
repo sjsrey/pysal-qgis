@@ -29,7 +29,7 @@ sys.path.append( os.path.abspath( os.path.dirname( __file__) + '/tools') )
 
 # import tools
 # import localMoran, weights
-import localMoran, doAbout, globalgearyDialog
+import localMoran, doAbout, globalgearyDialog, globalMoran
 import weightsFromShapefile
 
 class Pysal: 
@@ -103,6 +103,8 @@ class Pysal:
 
     # assign methods to actions
     QObject.connect( self.moransLocal, SIGNAL("triggered()"), self.localMoran ) 
+    QObject.connect( self.moransGlobal, SIGNAL("triggered()"), self.globalMoran ) 
+    QObject.connect( self.wfc, SIGNAL("triggered()"), self.matweight )    
     QObject.connect( self.wfc, SIGNAL("triggered()"), self.matweight )    
     QObject.connect( self.geary, SIGNAL("triggered()"), self.globalGeary )  
     #QObject.connect( getis, SIGNAL("triggered()"), self.globalGetis )
@@ -123,9 +125,9 @@ class Pysal:
   #  d = globalAuto.gaDialog ( self.iface, 1 )
   #  d.exec_()
 
-  #def globalmoran( self ):
-   # d = globalMoran.globalMoranDialog ( self.iface )
-   # d.exec_()
+  def globalMoran( self ):
+    d = globalMoran.globalMoranDialog ( self.iface )
+    d.exec_()
 
 ##  def globalGeary( self ):
 ##    d = doSumLines.Dialog ( self.iface )
