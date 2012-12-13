@@ -21,27 +21,37 @@ class localMoranDialog(QDialog, Ui_Dialog):
         QDialog.__init__(self)
         self.iface = iface
         self.setupUi(self)
-        self.setWindowTitle(self.tr("Global Moran's I"))
+        self.setWindowTitle(self.tr("Local Moran's I"))
         QObject.connect(self.inShape, SIGNAL("currentIndexChanged(QString)"), self.update)
 	self.cancel_close = self.buttonBox.button( QDialogButtonBox.Close )	
 	self.buttonOK = self.buttonBox.button( QDialogButtonBox.Ok )
 
 
 	# Layer List
-	mapCanvas=self.iface.mapCanvas()
-	layerList= ftools_utils.getLayerNames([QGis.Polygon])
-	self.inShape.addItems(layerList)
+	# mapCanvas=self.iface.mapCanvas()
+	self.layerList= (self.getLayerName([QGis.Polygon]))
+        self.layerpaths = (self.getLayerPath([QGis.Polygon]))
+        paths = tuple(self.layerpaths)
+        names = tuple(self.layerList)
+        self.dic = dict(zip(names,paths))
+        for layer in self.layerList:
+            self.inShape.addItem(layer)
 	
     def accept(self):
 	self.buttonOK.setEnabled( False )
 	if self.inShape.currentText() == "":
-            QMessageBox.information(self, self.tr("Global Moran's I"), self.tr("Please specify input shapefile"))
+            QMessageBox.information(self, self.tr("Local Moran's I"), self.tr("Please specify input shapefile"))
         elif self.inField.currentText() == "":
-            QMessageBox.information(self, self.tr("Global Moran's I"), self.tr("Please specify target field"))
+            QMessageBox.information(self, self.tr("Local Moran's I"), self.tr("Please specify target field"))
         elif self.idVariable.currentText() == "":
-            QMessageBox.information(self, self.tr("Global Moran's I"), self.tr("Please specify Weight Matrix unique ID field"))
+            QMessageBox.information(self, self.tr("Local Moran's I"), self.tr("Please specify Weight Matrix unique ID field"))
         else:
-	    vlayer=self.inShape.currentText()
+            if str(self.inShape.currentText()) == "":
+               vlayer = str(self.layerpaths)
+            else:
+               vlayer = str(self.dic[str(self.inShape.currentText())])
+            
+	    # vlayer=self.inShape.currentText()
 	    tfield=self.inField.currentText()
 	    idvar=self.idVariable.currentText()
 	    if self.rook.isChecked():matType="Rook"
@@ -80,8 +90,9 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	allAttrs=provider.attributeIndexes()
 	caps=vlayer.dataProvider().capabilities()
 	if caps & QgsVectorDataProvider.AddAttributes:
-	    res = vlayer.dataProvider().addAttributes([QgsField("TestField", QVariant.Double)])
-	wp="/home/evazhang/pysal-qgis/dev/Iowa.shp"
+            TestField = idvar+"_test"
+	    res = vlayer.dataProvider().addAttributes([QgsField(TestField, QVariant.Double)])
+	wp=str(self.dic[str(self.inShape.currentText())])
 	w=py.rook_from_shapefile(wp, idVariable=unicode(idvar))
 	w1=wp[:-3]+"dbf"
 	db=py.open(w1)
@@ -113,9 +124,34 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	    vlayer.changeAttributeValue(fid,n,d[i])
 	    print d[i] #index of the new added field
 	vlayer.commitChanges()
+        QDialog.accept(self)
 	#if vlayer.commitChanges() == "True": self.SAresult.text()="Done!"
 	#else: self.SAresult.text()="Can't make it!"
   
 
-	
+    def getLayerPath( self, vTypes ):
+        layermap = QgsMapLayerRegistry.instance().mapLayers()
+        layerPathList = []
+        for name, layer in layermap.iteritems():
+            if layer.type() == QgsMapLayer.VectorLayer:
+                if layer.geometryType() in vTypes:
+                    fullPath = unicode( layer.dataProvider().dataSourceUri() )
+                    fullPath = fullPath.split('|')[0]
+                    fullPath = fullPath.split("u'")[-1]
+                    layerPathList.append(str(fullPath))
+                    # print layerlist
+            else:
+                pass
+        return layerPathList
+
+    def getLayerName( self, vTypes ):
+        layermap = QgsMapLayerRegistry.instance().mapLayers()
+        layerNameList = []
+        for name, layer in layermap.iteritems():
+            if layer.type() == QgsMapLayer.VectorLayer:
+                if layer.geometryType() in vTypes:
+                    layerNameList.append( unicode( layer.name() ) )
+            else:
+                pass
+        return layerNameList	
 
