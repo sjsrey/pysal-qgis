@@ -56,7 +56,7 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	    idvar=self.idVariable.currentText()
 	    if self.rook.isChecked():matType="Rook"
 	    else: matType="Queen"
-	    self.compute(vlayer,tfield,idvar)
+	    self.compute(vlayer,tfield,idvar,matType)
 	    self.buttonOK.setEnabled( True )
 
 
@@ -69,31 +69,33 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	    changedField=ftools_utils.getFieldList(changedLayer)
 	    changedID=ftools_utils.getFieldList(changedLayer)
 	    for i in changedField:	
-	        #if changedField[i].type() == QVariant.Int or \
-		#changedField[i].type() == QVariant.String:
-	        self.inField.addItem(unicode(changedField[i].name()))
+                if changedField[i].typeName() != "String":
+	           self.inField.addItem(unicode(changedField[i].name()))
 	    for i in changedID:
-	        #if changedID[i].type() == QVariant.Int or \
-	        #changedID[i].type() == QVariant.String:
-	        self.idVariable.addItem(unicode(changedID[i].name()))
+	        if changedID[i].typeName() != "String":
+	           self.idVariable.addItem(unicode(changedID[i].name()))
 	
 
 
     #def rookMatrix(self, provider1, provider2, index1, index2)       
-    def compute(self, vlayer, tfield, idvar):
+    def compute(self, vlayer, tfield, idvar,matType):
 	vlayer=qgis.utils.iface.activeLayer()
 	idvar=self.idVariable.currentText()
-        print type(idvar)
+        # print type(idvar)
 	tfield=self.inField.currentText()
-        print type(tfield)
+        # print type(tfield)
 	provider=vlayer.dataProvider()
 	allAttrs=provider.attributeIndexes()
 	caps=vlayer.dataProvider().capabilities()
 	if caps & QgsVectorDataProvider.AddAttributes:
-            TestField = idvar+"_test"
+            TestField = idvar[:5]+"_qrr"
 	    res = vlayer.dataProvider().addAttributes([QgsField(TestField, QVariant.Double)])
 	wp=str(self.dic[str(self.inShape.currentText())])
-	w=py.rook_from_shapefile(wp, idVariable=unicode(idvar))
+        if matType == "Rook":
+           w = py.rook_from_shapefile(wp, idVariable=unicode(idvar))
+        else:
+           w = py.queen_from_shapefile(wp, idVariable=unicode(idvar))
+
 	w1=wp[:-3]+"dbf"
 	db=py.open(w1)
 	y=np.array(db.by_col[unicode(tfield)])
@@ -120,9 +122,9 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	vlayer.startEditing()
 	for i in a:
 	    fid=int(i)
-	    print fid
+	    # print fid
 	    vlayer.changeAttributeValue(fid,n,d[i])
-	    print d[i] #index of the new added field
+	    # print d[i] #index of the new added field
 	vlayer.commitChanges()
         QDialog.accept(self)
 	#if vlayer.commitChanges() == "True": self.SAresult.text()="Done!"
