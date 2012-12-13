@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'localMoran.ui'
 #
-# Created: Thu Dec 13 05:05:27 2012
+# Created: Thu Dec 13 05:59:20 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -81,6 +81,10 @@ class Ui_Dialog(object):
         self.rook = QtGui.QRadioButton(self.groupBox)
         self.rook.setGeometry(QtCore.QRect(0, 40, 359, 22))
         self.rook.setObjectName(_fromUtf8("rook"))
+        self.progressBar = QtGui.QProgressBar(Dialog)
+        self.progressBar.setGeometry(QtCore.QRect(20, 390, 171, 27))
+        self.progressBar.setProperty("value", 24)
+        self.progressBar.setObjectName(_fromUtf8("progressBar"))
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)

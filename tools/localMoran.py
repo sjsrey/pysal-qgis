@@ -23,6 +23,7 @@ class localMoranDialog(QDialog, Ui_Dialog):
         self.setupUi(self)
         self.setWindowTitle(self.tr("Local Moran's I"))
         QObject.connect(self.inShape, SIGNAL("currentIndexChanged(QString)"), self.update)
+	self.progressBar.setValue(0)
 	self.buttonOk = self.buttonBox.button( QDialogButtonBox.Ok )	
 	#self.buttonApply = self.buttonBox.button( QDialogButtonBox.ApplyRole )
 	self.buttonCancel = self.buttonBox.button( QDialogButtonBox.Cancel )
@@ -58,7 +59,8 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	    idvar=self.idVariable.currentText()
 	    if self.rook.isChecked():matType="Rook"
 	    else: matType="Queen"
-	    self.compute(vlayer,tfield,idvar,matType)
+            self.progressBar.setValue(0)
+	    self.compute(vlayer,tfield,idvar,matType,self.progressBar)
 	    self.buttonOk.setEnabled( True )
 
 
@@ -77,7 +79,7 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	        if changedID[i].typeName() != "String":
 	           self.idVariable.addItem(unicode(changedID[i].name()))
 	  
-    def compute(self, vlayer, tfield, idvar,matType):
+    def compute(self, vlayer, tfield, idvar,matType,progressBar):
 	vlayer=qgis.utils.iface.activeLayer()
 	idvar=self.idVariable.currentText()
         # print type(idvar)
@@ -86,6 +88,7 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	provider=vlayer.dataProvider()
 	allAttrs=provider.attributeIndexes()
 	caps=vlayer.dataProvider().capabilities()
+	start=15.00
 	if caps & QgsVectorDataProvider.AddAttributes:
             if matType == "Rook":
                TestField = tfield[:7]+"_r"
@@ -122,14 +125,21 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	fieldList=ftools_utils.getFieldList(vlayer)
 	print len(fieldList)
 	n=len(fieldList)-1
+	add=85.00/len(l)
+	print add
 	vlayer.startEditing()
 	for i in a:
 	    fid=int(i)
 	    # print fid
 	    vlayer.changeAttributeValue(fid,n,d[i])
+	    start=start+add
+	    print start
+	    
 	    # print d[i] #index of the new added field
 	vlayer.commitChanges()
 	self.SAresult.setText("Significance values have been added to your attribute table!")
+	start=start+1	
+	progressBar.setValue(start)
         #QDialog.accept(self)
 	 
 
