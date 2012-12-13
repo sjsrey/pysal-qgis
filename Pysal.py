@@ -29,7 +29,7 @@ sys.path.append( os.path.abspath( os.path.dirname( __file__) + '/tools') )
 
 # import tools
 # import localMoran, weights
-import localMoran, doAbout, globalgearyDialog
+import localMoran, doAbout, globalGearyC
 import weightsFromShapefile
 
 class Pysal: 
@@ -104,7 +104,7 @@ class Pysal:
     # assign methods to actions
     QObject.connect( self.moransLocal, SIGNAL("triggered()"), self.localMoran ) 
     QObject.connect( self.wfc, SIGNAL("triggered()"), self.matweight )    
-    QObject.connect( self.geary, SIGNAL("triggered()"), self.globalGeary )  
+    QObject.connect( self.geary, SIGNAL("triggered()"), self.globalGearyC )  
     #QObject.connect( getis, SIGNAL("triggered()"), self.globalGetis )
     QObject.connect( self.pysalAbout, SIGNAL("triggered()"), self.about )
 
@@ -119,37 +119,17 @@ class Pysal:
     d = localMoran.localMoranDialog ( self.iface )
     d.exec_()
 
-  #def globalmoran( self ):
-  #  d = globalAuto.gaDialog ( self.iface, 1 )
-  #  d.exec_()
-
-  #def globalmoran( self ):
-   # d = globalMoran.globalMoranDialog ( self.iface )
-   # d.exec_()
-
 ##  def globalGeary( self ):
 ##    d = doSumLines.Dialog ( self.iface )
 ##    d.exec_()
 
-  def globalGeary(self): 
-    # create and show the dialog
-    #dlg1 = globalAuto.globalDialog.globalGeary()
-    dlg1 = globalgearyDialog.globalgDialog()
-    # show the dialog
-    dlg1.show()
-    result = dlg1.exec_() 
+  def globalGearyC(self): 
+    d=globalGearyC.globalGearyCDialog(self.iface)
+    d.exec_()    
 
   def matweight( self ) :
     d = weightsFromShapefile.weightsdialog( self.iface )
     d.exec_()
-
-  #def globalgeary( self ):
-  #  d = globalAuto,globalAutoDialog( self.iface, 2 )
-  #  d.exec_()
-
-  #def globalgetis( self ):
-  #  d = globalAuto.globalAutoDialog( self.iface, 3 )
-  #  d.exec_()
 
   def about( self ):
     d = doAbout.Dialog (self.iface )
