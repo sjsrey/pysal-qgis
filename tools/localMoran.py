@@ -23,8 +23,10 @@ class localMoranDialog(QDialog, Ui_Dialog):
         self.setupUi(self)
         self.setWindowTitle(self.tr("Local Moran's I"))
         QObject.connect(self.inShape, SIGNAL("currentIndexChanged(QString)"), self.update)
-	self.cancel_close = self.buttonBox.button( QDialogButtonBox.Close )	
-	self.buttonOK = self.buttonBox.button( QDialogButtonBox.Ok )
+	self.buttonClose = self.buttonBox.button( QDialogButtonBox.Close )	
+	self.buttonApply = self.buttonBox.button( QDialogButtonBox.Apply )
+	self.buttonCancel = self.buttonBox.button( QDialogButtonBox.Cancel )
+
 
 
 	# Layer List
@@ -54,10 +56,14 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	    # vlayer=self.inShape.currentText()
 	    tfield=self.inField.currentText()
 	    idvar=self.idVariable.currentText()
-	    if self.rook.isChecked():matType="Rook"
-	    else: matType="Queen"
+	    if self.rook.isChecked():
+		matType="Rook"
+		self.queen.setEnabled( False )
+	    elif self.queen.isChecked(): 
+		matType="Queen"
+		self.rook.setEnabled( False )
 	    self.compute(vlayer,tfield,idvar,matType)
-	    self.buttonOK.setEnabled( True )
+	    self.buttonApply.setEnabled( True )
 
 
     def update(self,inputLayer):
@@ -74,10 +80,7 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	    for i in changedID:
 	        if changedID[i].typeName() != "String":
 	           self.idVariable.addItem(unicode(changedID[i].name()))
-	
-
-
-    #def rookMatrix(self, provider1, provider2, index1, index2)       
+	  
     def compute(self, vlayer, tfield, idvar,matType):
 	vlayer=qgis.utils.iface.activeLayer()
 	idvar=self.idVariable.currentText()
@@ -126,10 +129,9 @@ class localMoranDialog(QDialog, Ui_Dialog):
 	    vlayer.changeAttributeValue(fid,n,d[i])
 	    # print d[i] #index of the new added field
 	vlayer.commitChanges()
-        QDialog.accept(self)
-	#if vlayer.commitChanges() == "True": self.SAresult.text()="Done!"
-	#else: self.SAresult.text()="Can't make it!"
-  
+	self.bottonClose.setEnabled( True )	
+        #QDialog.accept(self)
+	 
 
     def getLayerPath( self, vTypes ):
         layermap = QgsMapLayerRegistry.instance().mapLayers()
