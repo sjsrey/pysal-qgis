@@ -100,9 +100,40 @@ class globalGearyCDialog(QDialog, Ui_Dialog):
 	db=py.open(w1)
 	y=np.array(db.by_col[unicode(tfield)])
       	np.random.seed(12345)
-	lm=py.Moran_Local(y,w)
-	l=lm.p_sim
-	
+	gc = py.Geary(y,w)
+        #lm=py.Moran_Local(y,w)
+	#l=lm.p_sim
+	gg = gc.C
+        self.SAresult.setText(str(gg))
+
+    def getLayerPath( self, vTypes ):
+        layermap = QgsMapLayerRegistry.instance().mapLayers()
+        layerPathList = []
+        for name, layer in layermap.iteritems():
+            if layer.type() == QgsMapLayer.VectorLayer:
+                if layer.geometryType() in vTypes:
+                    fullPath = unicode( layer.dataProvider().dataSourceUri() )
+                    fullPath = fullPath.split('|')[0]
+                    fullPath = fullPath.split("u'")[-1]
+                    layerPathList.append(str(fullPath))
+                    # print layerlist
+            else:
+                pass
+        return layerPathList
+
+    def getLayerName( self, vTypes ):
+        layermap = QgsMapLayerRegistry.instance().mapLayers()
+        layerNameList = []
+        for name, layer in layermap.iteritems():
+            if layer.type() == QgsMapLayer.VectorLayer:
+                if layer.geometryType() in vTypes:
+                    layerNameList.append( unicode( layer.name() ) )
+            else:
+                pass
+        return layerNameList
+
+	  
+"""
 	# Replace insignificant values with the number 5:
 	for i in range(len(l)):
 	    if l[i] > 0.05:
@@ -130,30 +161,6 @@ class globalGearyCDialog(QDialog, Ui_Dialog):
 	#if vlayer.commitChanges() == "True": self.SAresult.text()="Done!"
 	#else: self.SAresult.text()="Can't make it!"
   
+"""
 
-    def getLayerPath( self, vTypes ):
-        layermap = QgsMapLayerRegistry.instance().mapLayers()
-        layerPathList = []
-        for name, layer in layermap.iteritems():
-            if layer.type() == QgsMapLayer.VectorLayer:
-                if layer.geometryType() in vTypes:
-                    fullPath = unicode( layer.dataProvider().dataSourceUri() )
-                    fullPath = fullPath.split('|')[0]
-                    fullPath = fullPath.split("u'")[-1]
-                    layerPathList.append(str(fullPath))
-                    # print layerlist
-            else:
-                pass
-        return layerPathList
-
-    def getLayerName( self, vTypes ):
-        layermap = QgsMapLayerRegistry.instance().mapLayers()
-        layerNameList = []
-        for name, layer in layermap.iteritems():
-            if layer.type() == QgsMapLayer.VectorLayer:
-                if layer.geometryType() in vTypes:
-                    layerNameList.append( unicode( layer.name() ) )
-            else:
-                pass
-        return layerNameList	
 
