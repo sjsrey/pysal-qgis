@@ -27,8 +27,6 @@ import os.path, sys
 currentPath = os.path.dirname( __file__ )
 sys.path.append( os.path.abspath( os.path.dirname( __file__) + '/tools') )
 
-# import tools
-# import localMoran, weights
 import localMoran, doAbout, globalGearyC, globalMoran
 import weightsFromShapefile
 
@@ -53,21 +51,18 @@ class Pysal:
   def updateThemeIcons( self, theme ):
     self.esdaMenu.setIcon( QIcon ( self.getThemeIcon( "esda.png" ) ) )
     self.weightsMenu.setIcon( QIcon (self.getThemeIcon( "weights.png" ) ) )
-    # self.localAutoMenu.setIcon( QIcon (self.getThemeIcon( "lam.png" ) ) )
-    # self.globalAutoMenu.setIcon( QIcon (self.getPysalIcon( "gam.png" ) ) )
 
     self.moransGlobal.setIcon( QIcon (self.getThemeIcon( "mg.png" ) ) )
     self.moransLocal.setIcon( QIcon (self.getThemeIcon( "ml.png" ) ) )
     self.geary.setIcon( QIcon (self.getThemeIcon( "geary.png" ) ) )
-    self.getis.setIcon( QIcon (self.getThemeIcon( "getis.png" ) ) )
+    # self.getis.setIcon( QIcon (self.getThemeIcon( "getis.png" ) ) )
     self.wfc.setIcon( QIcon (self.getThemeIcon( "mat.png" ) ) )
+
     self.pysalAbout.setIcon( QIcon (self.getThemeIcon( "about.png" ) ) )
 
 
   def initGui(self):  
     # Create action that will start plugin configuration
-    # self.action = QAction(QIcon("home/everett/.qgis/python/plugins/Pysal/pysal.png"), \ "PySAL", self.iface.mainWindow())
-    # connect the action to the run method
     QObject.connect(self.iface, SIGNAL( "currentThemeChanged( QString )" ), self.updateThemeIcons ) 
     
     self.menu = QMenu()    
@@ -77,8 +72,8 @@ class Pysal:
     self.moransLocal = QAction( QCoreApplication.translate( "PySAL" , "Local &Moran's I" ), self.iface.mainWindow() )
     self.moransGlobal = QAction( QCoreApplication.translate( "PySAL" , "Global Moran's &I" ), self.iface.mainWindow() )
     self.geary = QAction( QCoreApplication.translate( "PySAL" , "Geary's &C" ),self.iface.mainWindow() )
-    self.getis = QAction( QCoreApplication.translate( "PySAL" , "Getis and Ord's &G" ),self.iface.mainWindow() )
-    self.esdaMenu.addActions( [self.moransLocal, self.moransGlobal, self.geary, self.getis] )
+    # self.getis = QAction( QCoreApplication.translate( "PySAL" , "Getis and Ord's &G" ),self.iface.mainWindow() )
+    self.esdaMenu.addActions( [self.moransLocal, self.moransGlobal, self.geary] )
 
     self.weightsMenu = QMenu( QCoreApplication.translate( "PySAL" , "&Weights" ), self.iface.mainWindow() )
     self.wfc = QAction( QCoreApplication.translate( "PySAL" , "&Weights from Contiguity" ), self.iface.mainWindow() )
@@ -95,7 +90,6 @@ class Pysal:
     self.menu.addAction( self.pysalAbout )
         
     # add actions to submenus, other actions will be added to the list here
- 
     menu_bar = self.iface.mainWindow().menuBar()
     actions = menu_bar.actions()
     lastAction = actions[ len( actions ) - 1 ]
@@ -112,9 +106,6 @@ class Pysal:
 
   def unload(self):
     # Remove the plugin menu item and icon
-    # self.iface.removePluginMenu("&Pysal",self.action)
-    # self.iface.removeToolBarIcon(self.action)
-    # del self.toolBar
     del self.menu
  
   def localMoran( self ):
@@ -124,7 +115,6 @@ class Pysal:
   def globalMoran( self ):
     d = globalMoran.globalMoranDialog ( self.iface )
     d.exec_()
-
 
   def globalGearyC(self): 
     d=globalGearyC.globalGearyCDialog(self.iface)

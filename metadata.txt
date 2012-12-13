@@ -2,15 +2,11 @@
 [general]
 name=PySAL
 qgisMinimumVersion=1.0
-description=PySAL toolkit for QGIS
+description=PySAL Tools for QGIS
 category=Vector
 version=version 0.1
 ; end of mandatory metadata
 
-; these metadata can be empty
-; in a future version of the web application it will
-; be probably possible to create a project on redmine
-; if they are not filled
 homepage=http://code.google.com/p/pysal/
 tracker=http://code.google.com/p/pysal/
 repository=https://github.com/sjsrey/pysal-qgis

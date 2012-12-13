@@ -8,20 +8,20 @@ import qgis.utils
 import ftools_utils
 
 from qgis.core import *
-from Ui_globalGearyC import Ui_Dialog
+from Ui_globalMoran import Ui_Dialog
 
 import pysal as py
 import numpy as np
 import math
 
 
-class globalGearyCDialog(QDialog, Ui_Dialog):
+class globalMoranDialog(QDialog, Ui_Dialog):
 
     def __init__(self, iface):
         QDialog.__init__(self)
         self.iface = iface
         self.setupUi(self)
-        self.setWindowTitle(self.tr("Global Geary's C"))
+        self.setWindowTitle(self.tr("Global Moran's I"))
         QObject.connect(self.inShape, SIGNAL("currentIndexChanged(QString)"), self.update)
 	self.cancel_close = self.buttonBox.button( QDialogButtonBox.Close )	
 	self.buttonOK = self.buttonBox.button( QDialogButtonBox.Ok )
@@ -40,11 +40,11 @@ class globalGearyCDialog(QDialog, Ui_Dialog):
     def accept(self):
 	self.buttonOK.setEnabled( False )
 	if self.inShape.currentText() == "":
-            QMessageBox.information(self, self.tr("Global Geary's C"), self.tr("Please specify input shapefile"))
+            QMessageBox.information(self, self.tr("Global Moran's I"), self.tr("Please specify input shapefile"))
         elif self.inField.currentText() == "":
-            QMessageBox.information(self, self.tr("Global Geary's C"), self.tr("Please specify target field"))
+            QMessageBox.information(self, self.tr("GLobal Moran's I"), self.tr("Please specify target field"))
         elif self.idVariable.currentText() == "":
-            QMessageBox.information(self, self.tr("Global Geary's C"), self.tr("Please specify Weight Matrix unique ID field"))
+            QMessageBox.information(self, self.tr("Global Moran's I"), self.tr("Please specify Weight Matrix unique ID field"))
         else:
             if str(self.inShape.currentText()) == "":
                vlayer = str(self.layerpaths)
@@ -99,12 +99,12 @@ class globalGearyCDialog(QDialog, Ui_Dialog):
 	w1=wp[:-3]+"dbf"
 	db=py.open(w1)
 	y=np.array(db.by_col[unicode(tfield)])
-      	np.random.seed(12345)
-	gc = py.Geary(y,w)
+      	#np.random.seed(12345)
+	mi = py.Moran(y,w)
         #lm=py.Moran_Local(y,w)
 	#l=lm.p_sim
-	gg = gc.C
-        self.SAresult.setText(str(gg))
+	mg = mi.I
+        self.SAresult.setText(str(mg))
 
     def getLayerPath( self, vTypes ):
         layermap = QgsMapLayerRegistry.instance().mapLayers()
@@ -162,5 +162,6 @@ class globalGearyCDialog(QDialog, Ui_Dialog):
 	#else: self.SAresult.text()="Can't make it!"
   
 """
+
 
 
